@@ -57,7 +57,7 @@ const Player = ({currentSong, isPlaying, setIsPlaying}) => {
         <FontAwesomeIcon
           className="play"
           size="2x"
-          icon={isPlaying ? faPlay : faPause}
+          icon={isPlaying ? faPause : faPlay}
           onClick={playSongHandler}
         />
         <FontAwesomeIcon
