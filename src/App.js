@@ -43,6 +43,7 @@ function App() {
       {/* <h1>Chill Vibes Music</h1> */}
       <Song currentSong={currentSong} setCurrentSong={setCurrentSong} />
       <Player
+      songs={songs}
         setSongInfo={setSongInfo}
         songInfo={songInfo}
         audioRef={audioRef}
@@ -50,6 +51,7 @@ function App() {
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
         currentSong={currentSong}
+        setCurrentSong={setCurrentSong}
       />
       <Library
         setCurrentSong={setCurrentSong}

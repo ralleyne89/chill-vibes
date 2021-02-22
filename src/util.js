@@ -9,7 +9,7 @@ const chillHop = () => {
             color: ['#CCB3C8', '#9B3134'],
             audio: 'https://mp3.chillhop.com/serve.php/?mp3=11233',
             id: uuidv4(),
-            active: false,
+            active: true,
         },
         {
             name: 'Snowstalgia',
@@ -18,7 +18,7 @@ const chillHop = () => {
             color: ['#CCB3C8', '#9B3134'],
             audio: 'https://mp3.chillhop.com/serve.php/?mp3=10305',
             id: uuidv4(),
-            active: true,
+            active: false,
         },
         {
             name: 'ny90',
