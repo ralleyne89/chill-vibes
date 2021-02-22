@@ -7,6 +7,8 @@ import Song from './components/Song';
 import Library from './components/Library';
 // Import util
 import data from './util';
+// Import nav
+import Nav from './components/Nav';
 
 function App() {
   // Ref
@@ -15,6 +17,7 @@ function App() {
   const [songs, setSongs] = useState(data());
   const [currentSong, setCurrentSong] = useState(songs[0]);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [libraryStatus, setLibraryStatus] = useState(false)
   const [songInfo, setSongInfo] = useState({
     currentTime: 0,
     duration: 0,
@@ -36,6 +39,7 @@ function App() {
   };
   return (
     <div className="App">
+      <Nav libraryStatus={libraryStatus} setLibraryStatus={setLibraryStatus} />
       {/* <h1>Chill Vibes Music</h1> */}
       <Song currentSong={currentSong} setCurrentSong={setCurrentSong} />
       <Player
@@ -53,6 +57,7 @@ function App() {
         audioRef={audioRef}
         isPlaying={isPlaying}
         setSongs={setSongs}
+        libraryStatus={libraryStatus}
       />
       <audio
         onTimeUpdate={timeUpdateHandler}
