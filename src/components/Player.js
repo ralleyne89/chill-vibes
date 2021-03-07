@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   faPlay,
@@ -16,8 +16,28 @@ const Player = ({
   setSongInfo,
   songInfo,
   playSongHandler,
-  setCurrentSong
+  setCurrentSong,
+  setSongs
 }) => {
+  // useEffect
+  useEffect(() =>{
+    // Add active state
+    const newSongs = songs.map((song) =>{
+      if(song.id === currentSong.id) {
+          return{
+              ...song,
+              active: true,
+          }
+      } else {
+          return{
+              ...song,
+              active: false,
+          }
+      }
+  })
+  setSongs(newSongs)
+  }, [currentSong])
+  // Event handlers
   const getTime = (time) => {
     return (
       Math.floor(time / 60) + ':' + ('0' + Math.floor(time % 60)).slice(-2)
