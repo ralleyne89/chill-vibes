@@ -6,7 +6,7 @@ import Player from './components/Player';
 import Song from './components/Song';
 import Library from './components/Library';
 // Import util
-import data from './util';
+import data from './data';
 // Import nav
 import Nav from './components/Nav';
 

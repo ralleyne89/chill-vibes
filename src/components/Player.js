@@ -6,7 +6,7 @@ import {
   faAngleLeft,
   faAngleRight,
 } from '@fortawesome/free-solid-svg-icons';
-
+import {PlayAudio} from '../util'
 const Player = ({
   songs,
   currentSong,
@@ -59,6 +59,7 @@ const Player = ({
       }
       setCurrentSong(songs[(currentIndex - 1) % songs.length]);
     }
+    PlayAudio(isPlaying, audioRef)
   }
   return (
     <div className="player">
