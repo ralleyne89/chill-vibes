@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Chill Vibes Music App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Need some music to work to? I got you covered, check out [Chill Vibes](https://chill-vibes.web.app/).
 
 ## Available Scripts
 
