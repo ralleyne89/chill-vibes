@@ -8,7 +8,7 @@ const Nav = ({libraryStatus, setLibraryStatus}) => {
             <h1>Chill Vibes</h1>
             <button onClick={() => setLibraryStatus(!libraryStatus)}>
                 Library
-                <FontAwesomeIcon icon={faMusic} />
+                <FontAwesomeIcon icon={faMusic} style={{marginLeft: 5}} />
             </button>
         </nav>
     )

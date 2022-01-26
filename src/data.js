@@ -3,6 +3,24 @@ import {v4 as uuidv4} from 'uuid'
 const chillHop = () => {
     return[
         {
+            name: 'Going Back',
+            cover: 'https://chillhop.com/wp-content/uploads/2020/10/0e5bb63f838ff92eeac142aae944e9f678df13c9-1024x1024.jpg',
+            artist: 'Swørn',
+            color: ['#CCB3C8', '#9B3134'],
+            audio: 'https://mp3.chillhop.com/serve.php/?mp3=10310',
+            id: uuidv4(),
+            active: false,
+        },
+        {
+            name: 'In My Head',
+            cover: 'https://chillhop.com/wp-content/uploads/2022/01/6881c7456483ab8ea364152a594942a20669a058-150x150.jpg',
+            artist: ['Misha ', 'NDO ', 'Flozigg '],
+            color: ['#CCB3C8', '#9B3134'],
+            audio: 'https://mp3.chillhop.com/serve.php/?mp3=30134',
+            id: uuidv4(),
+            active: true,
+        },
+        {
             name: 'Home Court',
             cover: 'https://chillhop.com/wp-content/uploads/2021/02/08cbb0848f669e1bd8b5a5152c4b7d20edf1b499-1024x1024.jpg',
             artist: ['Blue Wednesday ', 'Shopan '],
@@ -26,15 +44,6 @@ const chillHop = () => {
             artist: 'Ezzy',
             color: ['#CCB3C8', '#9B3134'],
             audio: 'https://mp3.chillhop.com/serve.php/?mp3=9331',
-            id: uuidv4(),
-            active: false,
-        },
-        {
-            name: 'Going Back',
-            cover: 'https://chillhop.com/wp-content/uploads/2020/10/0e5bb63f838ff92eeac142aae944e9f678df13c9-1024x1024.jpg',
-            artist: 'Swørn',
-            color: ['#CCB3C8', '#9B3134'],
-            audio: 'https://mp3.chillhop.com/serve.php/?mp3=10310',
             id: uuidv4(),
             active: false,
         },

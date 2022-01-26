@@ -7,12 +7,15 @@ nav {
         background: transparent;
         border: none;
         cursor: pointer;
-        border: 2px solid rgb(65, 65, 65);
-        padding: 0.5rem;
+        border: 2px solid rgb(155, 155, 155);
+        padding: 0.8rem;
+        border-radius:5px;
         transition: all 0.3s ease;
+        color: rgb(155, 155, 155);
         &:hover {
-            background:rgb(65, 65, 65);
+            background:#3496ff;;
             color: #fff;
+            border: none;
         }
     }
 }
