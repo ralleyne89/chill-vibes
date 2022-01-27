@@ -34,7 +34,7 @@ const SignUp = () => {
       console.log("LOADING:", loading)
       await signup(emailRef.current.value, passwordRef.current.value);
       console.log("EMAIL:", emailRef.current.value, "PASSWORD:", passwordRef.current.value)
-      history.push("/home")
+      history.push("/")
     } catch {
       setError("Failed to create an account");
     }
