@@ -221,18 +221,28 @@ const SongBrowser = ({ songs, setSongs, isOpen, setIsOpen }) => {
     return ["All", ...uniqueGenres.sort()];
   }, [songCatalog]);
 
+  // Initialize filtered songs when component mounts
   useEffect(() => {
-    // Simulate loading data from an API
+    setFilteredSongs(songCatalog);
+  }, [songCatalog]);
+
+  // Handle search and filtering
+  useEffect(() => {
+    // Start loading state
     setIsLoading(true);
-    setTimeout(() => {
+
+    // Use a timeout to simulate API call and prevent UI freezing
+    const searchTimeout = setTimeout(() => {
       let results = songCatalog;
 
       // Filter by search term
-      if (searchTerm) {
+      if (searchTerm.trim() !== "") {
         results = results.filter(
           (song) =>
             song.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            song.artist.toLowerCase().includes(searchTerm.toLowerCase())
+            song.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (song.genre &&
+              song.genre.toLowerCase().includes(searchTerm.toLowerCase()))
         );
       }
 
@@ -244,6 +254,9 @@ const SongBrowser = ({ songs, setSongs, isOpen, setIsOpen }) => {
       setFilteredSongs(results);
       setIsLoading(false);
     }, 300);
+
+    // Cleanup timeout on component unmount or when dependencies change
+    return () => clearTimeout(searchTimeout);
   }, [searchTerm, songCatalog, selectedGenre]);
 
   const isSongInLibrary = (songToCheck) => {
@@ -265,6 +278,23 @@ const SongBrowser = ({ songs, setSongs, isOpen, setIsOpen }) => {
     }
   };
 
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    e.stopPropagation();
+    setSearchTerm(e.target.value);
+  };
+
+  // Clear search input
+  const clearSearch = (e) => {
+    if (e) e.stopPropagation();
+    setSearchTerm("");
+    // Focus back on the input after clearing
+    setTimeout(() => {
+      const searchInput = document.querySelector(".song-browser .search-input");
+      if (searchInput) searchInput.focus();
+    }, 10);
+  };
+
   return (
     <div className={`song-browser ${isOpen ? "active" : ""}`}>
       <div className="browser-header">
@@ -275,23 +305,28 @@ const SongBrowser = ({ songs, setSongs, isOpen, setIsOpen }) => {
       </div>
 
       <div className="search-container">
-        <div className="search-input-container">
+        {/* <div className="search-input-container">
           <FontAwesomeIcon icon={faSearch} className="search-icon" />
           <input
             type="text"
-            placeholder="Search for songs or artists..."
+            placeholder="Search for songs, artists, or genres..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearchChange}
+            onClick={(e) => e.stopPropagation()}
+            onFocus={(e) => e.stopPropagation()}
             className="search-input"
+            aria-label="Search songs"
+            autoComplete="off"
           />
           {searchTerm && (
             <FontAwesomeIcon
               icon={faTimes}
               className="clear-icon"
-              onClick={() => setSearchTerm("")}
+              onClick={clearSearch}
+              aria-label="Clear search"
             />
           )}
-        </div>
+        </div> */}
 
         <div className="filter-options">
           <button
@@ -327,7 +362,13 @@ const SongBrowser = ({ songs, setSongs, isOpen, setIsOpen }) => {
           </div>
         ) : filteredSongs.length === 0 ? (
           <div className="no-results">
-            <p>No songs found matching "{searchTerm}"</p>
+            {searchTerm ? (
+              <p>No songs found matching "{searchTerm}"</p>
+            ) : selectedGenre !== "All" ? (
+              <p>No songs found in the "{selectedGenre}" genre</p>
+            ) : (
+              <p>No songs available</p>
+            )}
           </div>
         ) : (
           <>

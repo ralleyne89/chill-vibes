@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../images/logo.png";
 import ThemeToggle from "./ThemeToggle";
+// SearchBar removed as per requirement
 
 const Nav = ({ libraryStatus, setLibraryStatus, setBrowserStatus }) => {
   return (
@@ -16,6 +17,15 @@ const Nav = ({ libraryStatus, setLibraryStatus, setBrowserStatus }) => {
         <img src={Logo} style={{ width: 60 }} alt="Chill Vibes Logo" />
         <span className="app-name">Chill Vibes</span>
       </div>
+      {/* <div className="search-container">
+        <SearchBar
+          songs={songs}
+          setFilteredSongs={setSongs}
+          setCurrentSong={setCurrentSong}
+          audioRef={audioRef}
+          isPlaying={isPlaying}
+        />
+      </div> */}
       <div className="button-container">
         <ThemeToggle />
         <button onClick={() => setBrowserStatus(true)}>

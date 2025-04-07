@@ -6,6 +6,7 @@ nav {
     padding: 0 2rem;
     position: relative;
     z-index: 10;
+    flex-wrap: wrap;
 
     .logo-container {
         display: flex;
@@ -17,6 +18,14 @@ nav {
             color: #333;
             margin-left: 0.5rem;
         }
+    }
+
+    .search-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        max-width: 500px;
+        margin: 0 1rem;
     }
 
     .button-container {
