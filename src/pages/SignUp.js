@@ -11,7 +11,7 @@ import {
 import { useAuth } from "../contexts/AuthContext";
 import Nero from "../images/nero.png";
 import Background from "../images/background.png";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -21,24 +21,25 @@ const SignUp = () => {
   const history = useHistory();
   const { signup } = useAuth();
   // FUNCTION TO HANDLE SIGNUP SUBMIT FOR FORM
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     // PREVENT FORM FROM REFRESHING
     e.preventDefault();
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("Passwords do not match");
     }
     try {
-      console.log("FIRE")
       setError("");
       setLoading(true);
-      console.log("LOADING:", loading)
       await signup(emailRef.current.value, passwordRef.current.value);
-      console.log("EMAIL:", emailRef.current.value, "PASSWORD:", passwordRef.current.value)
-      history.push("/")
-    } catch {
-      setError("Failed to create an account");
+      history.push("/");
+    } catch (error) {
+      setError("Failed to create an account: " + (error.message || ""));
     }
     setLoading(false);
+  };
+
+  const handleLogin = () => {
+    history.push("/login");
   };
 
   return (
@@ -75,6 +76,9 @@ const SignUp = () => {
                     Sign Up
                   </Button>
                 </Form>
+                <div className="w-100 text-center mt-3">
+                  <Link to="/login">Already have an account? Login</Link>
+                </div>
               </Card.Body>
             </Card>
           </div>
@@ -113,6 +117,7 @@ const SignUp = () => {
                       style={{ borderRadius: 50 }}
                       variant="outline-light"
                       className="w-100"
+                      onClick={handleLogin}
                     >
                       Login
                     </Button>

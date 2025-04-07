@@ -1,12 +1,12 @@
-import React, {useState, useRef} from 'react';
-import Library from '../components/Library';
-import Nav from '../components/Nav';
-import Player from '../components/Player';
-import Song from '../components/Song';
-import data from '../data'
+import React, { useState, useRef } from "react";
+import Library from "../components/Library";
+import Nav from "../components/Nav";
+import Player from "../components/Player";
+import Song from "../components/Song";
+import data from "../data";
 
 const Home = () => {
-    // Ref
+  // Ref
   const audioRef = useRef(null);
   // State
   const [songs, setSongs] = useState(data());
@@ -25,8 +25,12 @@ const Home = () => {
     const roundedCurrent = Math.round(current);
     const roundedDuration = Math.round(duration);
     const animation = Math.round((roundedCurrent / roundedDuration) * 100);
-    console.log(animation)
-    setSongInfo({...songInfo, currentTime: current, duration, animationPercentage: animation});
+    setSongInfo({
+      ...songInfo,
+      currentTime: current,
+      duration,
+      animationPercentage: animation || 0,
+    });
   };
   // Event handlers
   const playSongHandler = () => {
@@ -39,10 +43,10 @@ const Home = () => {
     }
   };
   return (
-    <div className={`App ${libraryStatus ? 'library-active' : ''}`}>
+    <div className={`App ${libraryStatus ? "library-active" : ""}`}>
       <Nav libraryStatus={libraryStatus} setLibraryStatus={setLibraryStatus} />
       {/* <h1>Chill Vibes Music</h1> */}
-      <Song currentSong={currentSong} setCurrentSong={setCurrentSong} />
+      <Song currentSong={currentSong} />
       <Player
         songs={songs}
         setSongInfo={setSongInfo}
@@ -50,7 +54,6 @@ const Home = () => {
         audioRef={audioRef}
         playSongHandler={playSongHandler}
         isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
         currentSong={currentSong}
         setCurrentSong={setCurrentSong}
         setSongs={setSongs}
@@ -68,6 +71,8 @@ const Home = () => {
         ref={audioRef}
         src={currentSong.audio}
         onLoadedMetadata={timeUpdateHandler}
+        onError={(e) => console.error("Audio loading error:", e)}
+        crossOrigin="anonymous"
       />
     </div>
   );

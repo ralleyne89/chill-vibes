@@ -4,6 +4,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+
+  .loading-spinner {
+    position: absolute;
+    width: 20%;
+    height: 0;
+    padding-bottom: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #999;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
 
   img {
     width: 20%;
@@ -12,6 +27,10 @@
       0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
       0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
       0 100px 80px rgba(0, 0, 0, 0.12);
+
+    &.hidden {
+      display: none;
+    }
   }
   h2 {
     padding: 3rem 1rem 1rem 1rem;
@@ -25,6 +44,11 @@
 
 @media screen and (max-width: 768px) {
   .song-container {
+    .loading-spinner {
+      width: 60%;
+      padding-bottom: 60%;
+    }
+
     img {
       width: 60%;
     }

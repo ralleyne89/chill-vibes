@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
   faPause,
   faAngleLeft,
   faAngleRight,
+  faTachometerAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { PlayAudio } from "../util";
 const Player = ({
   songs,
   currentSong,
   isPlaying,
-  setIsPlaying,
   audioRef,
   setSongInfo,
   songInfo,
@@ -19,6 +20,15 @@ const Player = ({
   setCurrentSong,
   setSongs,
 }) => {
+  const [showSpeedControl, setShowSpeedControl] = useState(false);
+  const speedOptions = [0.5, 0.75, 1, 1.25, 1.5, 2];
+
+  // Set playback rate when audio element is available
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.playbackRate = 1;
+    }
+  }, [audioRef]);
   // useEffect
   useEffect(() => {
     // Add active state
@@ -36,7 +46,7 @@ const Player = ({
       }
     });
     setSongs(newSongs);
-  }, [currentSong]);
+  }, [currentSong, songs, setSongs]);
   // Event handlers
   const getTime = (time) => {
     return (
@@ -61,6 +71,13 @@ const Player = ({
     }
     PlayAudio(isPlaying, audioRef);
   };
+
+  const changeSpeed = (speed) => {
+    if (audioRef.current) {
+      audioRef.current.playbackRate = speed;
+    }
+    setShowSpeedControl(false);
+  };
   //Add styles
   const trackAnim = {
     transform: `translateX(${songInfo.animationPercentage}%)`,
@@ -72,7 +89,7 @@ const Player = ({
         <div
           className="track"
           style={{
-            background: `linear-gradient(to right${currentSong.color[0]}, ${currentSong.color[1]})`,
+            background: `linear-gradient(to right, ${currentSong.color[0]}, ${currentSong.color[1]})`,
           }}
         >
           <input
@@ -105,9 +122,45 @@ const Player = ({
           size="2x"
           icon={faAngleRight}
         />
+        <div className="speed-control-container">
+          <FontAwesomeIcon
+            onClick={() => setShowSpeedControl(!showSpeedControl)}
+            className="speed-icon"
+            icon={faTachometerAlt}
+          />
+          {showSpeedControl && (
+            <div className="speed-options">
+              {speedOptions.map((speed) => (
+                <button
+                  key={speed}
+                  onClick={() => changeSpeed(speed)}
+                  className={
+                    audioRef.current && audioRef.current.playbackRate === speed
+                      ? "active"
+                      : ""
+                  }
+                >
+                  {speed}x
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
+};
+
+Player.propTypes = {
+  songs: PropTypes.array.isRequired,
+  currentSong: PropTypes.object.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
+  audioRef: PropTypes.object.isRequired,
+  setSongInfo: PropTypes.func.isRequired,
+  songInfo: PropTypes.object.isRequired,
+  playSongHandler: PropTypes.func.isRequired,
+  setCurrentSong: PropTypes.func.isRequired,
+  setSongs: PropTypes.func.isRequired,
 };
 
 export default Player;
