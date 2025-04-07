@@ -122,6 +122,11 @@ const Player = ({
           size="2x"
           icon={faAngleRight}
         />
+      </div>
+      <div className="playback-speed">
+        <div className="current-speed">
+          <span>{audioRef.current ? audioRef.current.playbackRate : 1}x</span>
+        </div>
         <div className="speed-control-container">
           <FontAwesomeIcon
             onClick={() => setShowSpeedControl(!showSpeedControl)}

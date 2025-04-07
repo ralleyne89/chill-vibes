@@ -1,8 +1,97 @@
-# Chill Vibes Music App
+# Chill Vibes Music Player
 
-Need some music to work to? I got you covered, check out [Chill Vibes](https://chill-vibes.web.app/).
+Chill Vibes is a modern, feature-rich music player web application built with React. It offers a sleek interface for browsing, playing, and managing your music collection.
 
-## Available Scripts
+## Features
+
+### Music Playback
+
+- Play, pause, skip tracks, and control volume
+- Adjustable playback speed (0.5x to 2x)
+- Progress bar with time display
+- Automatic transition to next song
+
+### Library Management
+
+- Browse a curated catalog of songs across different genres
+- Search for songs by title or artist
+- Filter songs by genre
+- Add songs to your personal library
+- Remove songs from your library
+- Mark songs as favorites
+
+### User Experience
+
+- Responsive design that works on desktop and mobile devices
+- Dark mode toggle for comfortable viewing in any environment
+- Clean, intuitive interface
+- Smooth animations and transitions
+
+## How to Use
+
+### Playing Music
+
+- Click on a song in your library to play it
+- Use the player controls at the bottom to:
+  - Play/pause the current song
+  - Skip to the previous or next song
+  - Adjust volume
+  - Change playback speed
+- The progress bar shows the current position in the song and can be clicked to jump to a specific position
+
+### Managing Your Library
+
+1. **Browse Songs**:
+
+   - Click the "Browse" button in the navigation bar
+   - Browse through available songs
+   - Use the search bar to find specific songs or artists
+   - Use the filter button to filter songs by genre
+
+2. **Add Songs to Library**:
+
+   - While browsing, click the "+" button on a song to add it to your library
+
+3. **Remove Songs from Library**:
+
+   - In your library, click the trash icon on a song to remove it
+
+4. **Favorite Songs**:
+   - Click the heart icon on any song in your library to mark it as a favorite
+   - Use the "Favorites" filter in the library to show only your favorite songs
+
+### Customizing Your Experience
+
+- Click the moon/sun icon in the navigation bar to toggle between light and dark mode
+- Adjust playback speed using the speed control below the player
+
+## Technologies Used
+
+- React.js
+- SCSS for styling
+- FontAwesome for icons
+- UUID for generating unique IDs
+
+## Project Structure
+
+```
+chill-vibes/
+├── public/               # Public assets
+├── src/                  # Source files
+│   ├── components/       # React components
+│   ├── contexts/         # React contexts
+│   ├── images/           # Image assets
+│   ├── styles/           # SCSS style files
+│   ├── util/             # Utility functions
+│   ├── App.js            # Main App component
+│   ├── data.js           # Default song data
+│   └── index.js          # Application entry point
+└── README.md             # Project documentation
+```
+
+## Development
+
+### Available Scripts
 
 In the project directory, you can run:
 

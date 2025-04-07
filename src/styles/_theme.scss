@@ -88,6 +88,13 @@ body.dark-theme {
       svg {
         color: #e1e1e1;
       }
+    }
+
+    .playback-speed {
+      .current-speed {
+        color: #aaa;
+        background: rgba(255, 255, 255, 0.1);
+      }
 
       .speed-control-container {
         .speed-icon {
@@ -122,6 +129,13 @@ body.dark-theme {
   .song-container {
     h2, h3 {
       color: #e1e1e1;
+    }
+  }
+
+  // Empty library styles
+  .empty-library {
+    h2, p {
+      color: #aaa;
     }
   }
 
@@ -169,6 +183,24 @@ body.dark-theme {
 
         h4 {
           color: #aaa;
+        }
+      }
+
+      .song-actions {
+        .favorite-btn, .remove-btn {
+          color: #777;
+
+          &:hover {
+            color: #ff6b6b;
+          }
+        }
+
+        .favorite-btn.active {
+          color: #ff6b6b;
+        }
+
+        .remove-btn:hover {
+          color: #ff3333;
         }
       }
     }

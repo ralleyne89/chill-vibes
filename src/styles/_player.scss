@@ -16,6 +16,7 @@
     width: 100%;
     // padding: 1rem 0rem;
     -webkit-appearance: none;
+    appearance: none;
     background: transparent;
     cursor: pointer;
   }
@@ -29,7 +30,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  width: 40%;
+  width: 30%;
   position: relative;
 
   svg {
@@ -38,6 +39,23 @@
   }
   svg:hover {
     color: #3496ff;
+  }
+}
+
+.playback-speed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+
+  .current-speed {
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+    color: #777;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 0.3rem 0.6rem;
+    border-radius: 3px;
   }
 
   .speed-control-container {
@@ -137,7 +155,16 @@ input[type="range"]::-webkit-slider-thumb {
     width: 90%;
   }
   .play-control {
-    width: 80%;
+    width: 60%;
+  }
+  .playback-speed {
+    flex-direction: column;
+    align-items: center;
+
+    .current-speed {
+      margin-right: 0;
+      margin-bottom: 0.5rem;
+    }
 
     .speed-control-container {
       .speed-options {
