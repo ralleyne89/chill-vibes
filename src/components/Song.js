@@ -14,7 +14,6 @@ const Song = ({ currentSong }) => {
   }, [currentSong]);
 
   const handleImageError = () => {
-    console.log("Image failed to load:", currentSong.cover);
     setImageError(true);
     setIsLoading(false);
   };
@@ -32,10 +31,14 @@ const Song = ({ currentSong }) => {
         src={imageError ? fallbackImage : currentSong.cover}
         onError={handleImageError}
         onLoad={handleImageLoad}
-        crossOrigin="anonymous"
       />
       <h2>{currentSong.name}</h2>
       <h3>{currentSong.artist}</h3>
+      <div className="song-meta">
+        <span>{currentSong.genre}</span>
+        <span>{currentSong.mood}</span>
+        <span>{currentSong.durationLabel}</span>
+      </div>
     </div>
   );
 };

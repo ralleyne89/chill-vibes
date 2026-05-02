@@ -17,11 +17,28 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
-const firebase = initializeApp(firebaseConfig);
-// Initialize Analytics if not in development mode
-if (process.env.NODE_ENV === "production") {
+const requiredConfigKeys = [
+  ["apiKey", "REACT_APP_FIREBASE_API_KEY"],
+  ["authDomain", "REACT_APP_FIREBASE_AUTH_DOMAIN"],
+  ["projectId", "REACT_APP_FIREBASE_PROJECT_ID"],
+  ["appId", "REACT_APP_FIREBASE_APP_ID"],
+];
+
+export const missingFirebaseConfig = requiredConfigKeys
+  .filter(([key]) => !firebaseConfig[key])
+  .map(([, envName]) => envName);
+export const isFirebaseConfigured = missingFirebaseConfig.length === 0;
+
+// Initialize Firebase only when the environment is configured.
+const firebase = isFirebaseConfigured ? initializeApp(firebaseConfig) : null;
+
+if (
+  firebase &&
+  process.env.NODE_ENV === "production" &&
+  firebaseConfig.measurementId
+) {
   getAnalytics(firebase);
 }
-export const auth = getAuth();
+
+export const auth = firebase ? getAuth(firebase) : null;
 export default firebase;

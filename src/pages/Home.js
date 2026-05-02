@@ -1,100 +1,217 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Library from "../components/Library";
 import Nav from "../components/Nav";
 import Player from "../components/Player";
 import Song from "../components/Song";
 import SongBrowser from "../components/SongBrowser";
-import data from "../data";
+import data, { createLibrarySong, getSongById, songCatalog } from "../data";
+import { useAuth } from "../contexts/AuthContext";
+
+const STORAGE_PREFIX = "chill-vibes-library";
+
+const serializeLibrary = (songs) =>
+  songs.map((song) => ({
+    id: song.id,
+    favorite: Boolean(song.favorite),
+  }));
+
+const hydrateLibrary = (savedSongs) => {
+  if (!Array.isArray(savedSongs)) {
+    return data();
+  }
+
+  const library = savedSongs
+    .map((savedSong) => {
+      const catalogSong = getSongById(savedSong.id);
+      if (!catalogSong) {
+        return null;
+      }
+      return createLibrarySong(catalogSong, {
+        favorite: Boolean(savedSong.favorite),
+      });
+    })
+    .filter(Boolean);
+
+  return library.length > 0 ? library : data();
+};
 
 const Home = () => {
-  // Ref
   const audioRef = useRef(null);
-  // State
-  const [songs, setSongs] = useState(data());
-  const [currentSong, setCurrentSong] = useState(songs[0] || null);
+  const { currentUser } = useAuth();
+  const [songs, setSongs] = useState(() => data());
+  const [currentSong, setCurrentSong] = useState(() => data()[0] || null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [libraryStatus, setLibraryStatus] = useState(false);
   const [browserStatus, setBrowserStatus] = useState(false);
+  const [libraryLoaded, setLibraryLoaded] = useState(false);
+  const [audioError, setAudioError] = useState("");
   const [songInfo, setSongInfo] = useState({
     currentTime: 0,
     duration: 0,
     animationPercentage: 0,
   });
-  // Update currentSong if songs change and current song is removed
+
+  const libraryStorageKey = currentUser?.uid
+    ? `${STORAGE_PREFIX}:${currentUser.uid}`
+    : null;
+
   useEffect(() => {
-    if (
-      songs.length > 0 &&
-      !songs.some((song) => song.id === currentSong?.id)
-    ) {
+    if (!libraryStorageKey) {
+      return;
+    }
+
+    let nextSongs = data();
+    try {
+      const savedSongs = JSON.parse(localStorage.getItem(libraryStorageKey));
+      nextSongs = hydrateLibrary(savedSongs);
+    } catch {
+      nextSongs = data();
+    }
+
+    setSongs(nextSongs);
+    setCurrentSong(nextSongs[0] || null);
+    setIsPlaying(false);
+    setSongInfo({
+      currentTime: 0,
+      duration: 0,
+      animationPercentage: 0,
+    });
+    setLibraryLoaded(true);
+  }, [libraryStorageKey]);
+
+  useEffect(() => {
+    if (!libraryLoaded || !libraryStorageKey) {
+      return;
+    }
+
+    localStorage.setItem(libraryStorageKey, JSON.stringify(serializeLibrary(songs)));
+  }, [libraryLoaded, libraryStorageKey, songs]);
+
+  useEffect(() => {
+    if (songs.length === 0) {
+      setCurrentSong(null);
+      setIsPlaying(false);
+      return;
+    }
+
+    if (!currentSong || !songs.some((song) => song.id === currentSong.id)) {
       setCurrentSong(songs[0]);
     }
   }, [songs, currentSong]);
 
-  const timeUpdateHandler = (e) => {
-    const current = e.target.currentTime;
-    const duration = e.target.duration;
-    // calculate percentage
-    const roundedCurrent = Math.round(current);
-    const roundedDuration = Math.round(duration);
-    const animation = Math.round((roundedCurrent / roundedDuration) * 100);
+  useEffect(() => {
+    setSongs((currentSongs) => {
+      let hasChanged = false;
+      const nextSongs = currentSongs.map((song) => {
+        const active = currentSong?.id === song.id;
+        if (song.active === active) {
+          return song;
+        }
+        hasChanged = true;
+        return { ...song, active };
+      });
+      return hasChanged ? nextSongs : currentSongs;
+    });
+    setAudioError("");
+  }, [currentSong?.id]);
+
+  useEffect(() => {
+    if (!isPlaying || !audioRef.current || !currentSong) {
+      return;
+    }
+
+    audioRef.current.play().catch(() => {
+      setIsPlaying(false);
+      setAudioError("This track could not start. Try another song.");
+    });
+  }, [currentSong, isPlaying]);
+
+  const timeUpdateHandler = (event) => {
+    const current = event.target.currentTime || 0;
+    const duration = event.target.duration || 0;
+    const animation = duration ? Math.round((current / duration) * 100) : 0;
+
     setSongInfo({
-      ...songInfo,
       currentTime: current,
       duration,
-      animationPercentage: animation || 0,
+      animationPercentage: animation,
     });
   };
-  // Event handlers
-  const playSongHandler = () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(!isPlaying);
-    } else {
-      audioRef.current.play();
-      setIsPlaying(!isPlaying);
+
+  const playSongHandler = async () => {
+    if (!audioRef.current || !currentSong) {
+      return;
+    }
+
+    try {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        await audioRef.current.play();
+        setIsPlaying(true);
+      }
+      setAudioError("");
+    } catch {
+      setIsPlaying(false);
+      setAudioError("This track could not start. Try another song.");
     }
   };
+
+  const openLibrary = () => {
+    setBrowserStatus(false);
+    setLibraryStatus((status) => !status);
+  };
+
+  const openBrowser = () => {
+    setLibraryStatus(false);
+    setBrowserStatus(true);
+  };
+
+  const handleAudioError = () => {
+    setIsPlaying(false);
+    setAudioError("This track could not load. Try another song.");
+  };
+
   return (
-    <div
-      className={`App ${libraryStatus ? "library-active" : ""} ${
-        browserStatus ? "browser-active" : ""
-      }`}
-    >
+    <div className="App">
       <Nav
         libraryStatus={libraryStatus}
-        setLibraryStatus={setLibraryStatus}
-        setBrowserStatus={setBrowserStatus}
+        onLibraryToggle={openLibrary}
+        onBrowserOpen={openBrowser}
       />
-      {currentSong ? (
-        <Song currentSong={currentSong} />
-      ) : (
-        <div className="empty-library">
-          <h2>Your library is empty</h2>
-          <p>Click the Browse button to add songs to your library</p>
-        </div>
-      )}
-      {currentSong && (
-        <Player
-          songs={songs}
-          setSongInfo={setSongInfo}
-          songInfo={songInfo}
-          audioRef={audioRef}
-          playSongHandler={playSongHandler}
-          isPlaying={isPlaying}
-          currentSong={currentSong}
-          setCurrentSong={setCurrentSong}
-          setSongs={setSongs}
-        />
-      )}
+      <main className="player-shell">
+        {currentSong ? (
+          <Song currentSong={currentSong} />
+        ) : (
+          <div className="empty-library">
+            <h2>Your library is empty</h2>
+            <p>Open Browse to add tracks to your library.</p>
+          </div>
+        )}
+        {audioError && <p className="audio-error">{audioError}</p>}
+        {currentSong && (
+          <Player
+            songs={songs}
+            setSongInfo={setSongInfo}
+            songInfo={songInfo}
+            audioRef={audioRef}
+            playSongHandler={playSongHandler}
+            isPlaying={isPlaying}
+            currentSong={currentSong}
+            setCurrentSong={setCurrentSong}
+          />
+        )}
+      </main>
       <Library
         setCurrentSong={setCurrentSong}
         songs={songs}
-        audioRef={audioRef}
-        isPlaying={isPlaying}
         setSongs={setSongs}
         libraryStatus={libraryStatus}
+        onClose={() => setLibraryStatus(false)}
       />
       <SongBrowser
+        catalog={songCatalog}
         songs={songs}
         setSongs={setSongs}
         isOpen={browserStatus}
@@ -107,8 +224,7 @@ const Home = () => {
           ref={audioRef}
           src={currentSong.audio}
           onLoadedMetadata={timeUpdateHandler}
-          onError={(e) => console.error("Audio loading error:", e)}
-          crossOrigin="anonymous"
+          onError={handleAudioError}
         />
       )}
     </div>

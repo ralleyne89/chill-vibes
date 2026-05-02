@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { PlayAudio } from "../util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart as solidHeart,
@@ -13,8 +12,6 @@ const LibrarySong = ({
   songs,
   setCurrentSong,
   id,
-  audioRef,
-  isPlaying,
   setSongs,
 }) => {
   const [imageError, setImageError] = useState(false);
@@ -30,25 +27,7 @@ const LibrarySong = ({
 
   // Event Handler
   const songSelectHandler = () => {
-    // Selecting song
     setCurrentSong(song);
-    // Add active state
-    const newSongs = songs.map((song) => {
-      if (song.id === id) {
-        return {
-          ...song,
-          active: true,
-        };
-      } else {
-        return {
-          ...song,
-          active: false,
-        };
-      }
-    });
-    setSongs(newSongs);
-    // Check if the song is playing
-    PlayAudio(isPlaying, audioRef);
   };
 
   // Toggle favorite status
@@ -73,13 +52,11 @@ const LibrarySong = ({
   const removeSong = (e) => {
     e.stopPropagation(); // Prevent triggering songSelectHandler
 
-    // Filter out the current song
     const newSongs = songs.filter((s) => s.id !== id);
     setSongs(newSongs);
   };
 
   const handleImageError = () => {
-    console.log("Library image failed to load:", song.cover);
     setImageError(true);
     setIsLoading(false);
   };
@@ -88,10 +65,21 @@ const LibrarySong = ({
     setIsLoading(false);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      songSelectHandler();
+    }
+  };
+
   return (
     <div
       onClick={songSelectHandler}
+      onKeyDown={handleKeyDown}
       className={`library-song ${song.active ? "selected" : ""}`}
+      role="button"
+      tabIndex={0}
+      aria-label={`Play ${song.name} by ${song.artist}`}
     >
       <div className="song-image-container">
         {isLoading && <div className="loading-image">...</div>}
@@ -101,19 +89,23 @@ const LibrarySong = ({
           src={imageError ? fallbackImage : song.cover}
           onError={handleImageError}
           onLoad={handleImageLoad}
-          crossOrigin="anonymous"
         />
       </div>
       <div className="song-description">
         <h3>{song.name}</h3>
-        <h4>{song.artist}</h4>
+        <h4>
+          {song.artist}
+          {song.mood ? ` / ${song.mood}` : ""}
+        </h4>
       </div>
       <div className="song-actions">
         <button
           className={`favorite-btn ${song.favorite ? "active" : ""}`}
           onClick={toggleFavorite}
           aria-label={
-            song.favorite ? "Remove from favorites" : "Add to favorites"
+            song.favorite
+              ? `Remove ${song.name} from favorites`
+              : `Add ${song.name} to favorites`
           }
         >
           <FontAwesomeIcon icon={song.favorite ? solidHeart : regularHeart} />
@@ -121,7 +113,7 @@ const LibrarySong = ({
         <button
           className="remove-btn"
           onClick={removeSong}
-          aria-label="Remove from library"
+          aria-label={`Remove ${song.name} from library`}
         >
           <FontAwesomeIcon icon={faTrash} />
         </button>
@@ -135,8 +127,6 @@ LibrarySong.propTypes = {
   songs: PropTypes.array.isRequired,
   setCurrentSong: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
-  audioRef: PropTypes.object.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
   setSongs: PropTypes.func.isRequired,
 };
 

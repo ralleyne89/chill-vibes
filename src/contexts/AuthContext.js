@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
+import { auth, isFirebaseConfigured, missingFirebaseConfig } from "../firebase";
 import {
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
@@ -20,23 +21,38 @@ export const AuthProvider = ({ children }) => {
 
   // FUNCTION FOR USER SIGNUP
   const signup = (email, password) => {
+    if (!auth) {
+      return Promise.reject(new Error("Firebase is not configured."));
+    }
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   // FUNCTION FOR USER LOGIN
   const login = (email, password) => {
+    if (!auth) {
+      return Promise.reject(new Error("Firebase is not configured."));
+    }
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   // FUNCTION FOR USER LOGOUT
   const logout = () => {
+    if (!auth) {
+      return Promise.resolve();
+    }
     return signOut(auth);
   };
 
   // SETTING USER AFTER A STATE CHANGE
   useEffect(() => {
+    if (!auth) {
+      setCurrentUser(null);
+      setLoading(false);
+      return undefined;
+    }
+
     // FUNCTION TO UNSUBSCRIBE FROM LISTENER
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
     });
@@ -45,9 +61,11 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     currentUser,
+    isFirebaseConfigured,
     signup,
     login,
     logout,
+    missingFirebaseConfig,
   };
 
   return (

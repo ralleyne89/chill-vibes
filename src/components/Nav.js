@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMusic,
@@ -8,47 +9,70 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../images/logo.png";
 import ThemeToggle from "./ThemeToggle";
-// SearchBar removed as per requirement
+import { useAuth } from "../contexts/AuthContext";
 
-const Nav = ({ libraryStatus, setLibraryStatus, setBrowserStatus }) => {
+const Nav = ({ libraryStatus, onLibraryToggle, onBrowserOpen }) => {
+  const history = useHistory();
+  const { currentUser, logout } = useAuth();
+  const [logoutError, setLogoutError] = useState("");
+
+  const handleLogout = async () => {
+    try {
+      setLogoutError("");
+      await logout();
+      history.push("/login");
+    } catch {
+      setLogoutError("Could not log out. Please try again.");
+    }
+  };
+
   return (
-    <nav>
+    <nav aria-label="Primary">
       <div className="logo-container">
-        <img src={Logo} style={{ width: 60 }} alt="Chill Vibes Logo" />
+        <img src={Logo} alt="Chill Vibes Logo" />
         <span className="app-name">Chill Vibes</span>
       </div>
-      {/* <div className="search-container">
-        <SearchBar
-          songs={songs}
-          setFilteredSongs={setSongs}
-          setCurrentSong={setCurrentSong}
-          audioRef={audioRef}
-          isPlaying={isPlaying}
-        />
-      </div> */}
       <div className="button-container">
         <ThemeToggle />
-        <button onClick={() => setBrowserStatus(true)}>
-          Browse
-          <FontAwesomeIcon icon={faSearch} style={{ marginLeft: 5 }} />
+        <button
+          type="button"
+          className="nav-action"
+          onClick={onBrowserOpen}
+          aria-label="Browse songs"
+        >
+          <span>Browse</span>
+          <FontAwesomeIcon icon={faSearch} aria-hidden="true" />
         </button>
-        <button onClick={() => setLibraryStatus(!libraryStatus)}>
-          Library
-          <FontAwesomeIcon icon={faMusic} style={{ marginLeft: 5 }} />
+        <button
+          type="button"
+          className="nav-action"
+          onClick={onLibraryToggle}
+          aria-expanded={libraryStatus}
+          aria-controls="library-panel"
+          aria-label={libraryStatus ? "Close library" : "Open library"}
+        >
+          <span>Library</span>
+          <FontAwesomeIcon icon={faMusic} aria-hidden="true" />
         </button>
-        <button className="logout-btn">
-          Logout
-          <FontAwesomeIcon icon={faSignOutAlt} style={{ marginLeft: 5 }} />
+        <button
+          type="button"
+          className="logout-btn"
+          onClick={handleLogout}
+          title={currentUser?.email || "Signed in"}
+        >
+          <span>Logout</span>
+          <FontAwesomeIcon icon={faSignOutAlt} aria-hidden="true" />
         </button>
       </div>
+      {logoutError && <p className="nav-error">{logoutError}</p>}
     </nav>
   );
 };
 
 Nav.propTypes = {
   libraryStatus: PropTypes.bool.isRequired,
-  setLibraryStatus: PropTypes.func.isRequired,
-  setBrowserStatus: PropTypes.func.isRequired,
+  onLibraryToggle: PropTypes.func.isRequired,
+  onBrowserOpen: PropTypes.func.isRequired,
 };
 
 export default Nav;

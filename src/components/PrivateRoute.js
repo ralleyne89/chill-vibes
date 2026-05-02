@@ -1,15 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
-// Modified to always allow access without authentication
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  return <Route {...rest} render={(props) => <Component {...props} />} />;
+  const { currentUser, isFirebaseConfigured } = useAuth();
+
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isFirebaseConfigured && currentUser ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: props.location },
+            }}
+          />
+        )
+      }
+    />
+  );
 };
 
 PrivateRoute.propTypes = {
   component: PropTypes.elementType.isRequired,
-  // ...rest props are spread from Route
 };
 
 export default PrivateRoute;

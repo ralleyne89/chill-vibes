@@ -1,17 +1,8 @@
 import React, { useRef, useState } from "react";
-import {
-  Alert,
-  Button,
-  Card,
-  Col,
-  Container,
-  Form,
-  Row,
-} from "react-bootstrap";
+import { Alert, Button, Form } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
-import Nero from "../images/nero.png";
 import Background from "../images/background.png";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, Redirect, useLocation } from "react-router-dom";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -19,7 +10,14 @@ const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const history = useHistory();
-  const { login } = useAuth();
+  const location = useLocation();
+  const { currentUser, isFirebaseConfigured, login, missingFirebaseConfig } =
+    useAuth();
+  const redirectPath = location.state?.from?.pathname || "/";
+
+  if (currentUser) {
+    return <Redirect to={redirectPath} />;
+  }
 
   // FUNCTION TO HANDLE LOGIN SUBMIT FOR FORM
   const handleSubmit = async (e) => {
@@ -29,93 +27,68 @@ const Login = () => {
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      history.push("/");
+      history.replace(redirectPath);
     } catch (error) {
       setError("Failed to sign in: " + (error.message || ""));
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
-    <Row>
-      <Col style={{ background: `url(${Background})` }}>
-        <Container
-          className="d-flex align-items-center justify-content-center"
-          style={{ minHeight: "100vh" }}
-        >
-          <div className="w-100" style={{ maxWidth: "400px" }}>
-            <Card
-              className="glass-effect"
-              style={{ minHeight: "350px", padding: 20 }}
+    <main className="auth-screen">
+      <section
+        className="auth-visual"
+        style={{ "--auth-background": `url(${Background})` }}
+      >
+        <div className="auth-visual-panel">
+          <p>Chill Vibes</p>
+          <h1>Save your favorite chill sessions.</h1>
+          <Button
+            type="button"
+            variant="outline-light"
+            onClick={() => history.push("/signup")}
+          >
+            Sign Up
+          </Button>
+        </div>
+      </section>
+
+      <section className="auth-form-section" aria-labelledby="login-heading">
+        <div className="auth-card">
+          <p className="auth-kicker">Welcome Back</p>
+          <h2 id="login-heading">Login</h2>
+          {!isFirebaseConfigured && (
+            <Alert variant="warning">
+              Firebase is not configured. Add the required values to
+              <code> .env.local </code>
+              before signing in: {missingFirebaseConfig.join(", ")}.
+            </Alert>
+          )}
+          {error && <Alert variant="danger">{error}</Alert>}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group id="email" className="auth-field">
+              <Form.Label>Email</Form.Label>
+              <Form.Control type="email" ref={emailRef} required />
+            </Form.Group>
+            <Form.Group id="password" className="auth-field">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" ref={passwordRef} required />
+            </Form.Group>
+            <Button
+              className="auth-submit"
+              type="submit"
+              disabled={loading || !isFirebaseConfigured}
             >
-              <Card.Body>
-                <h2 style={{ color: "#fff", lineHeight: 1.5 }}>
-                  Vibe out to your playlist 🎵 <br /> Sign Up Now
-                </h2>
-                <img
-                  src={Nero}
-                  style={{
-                    width: 320,
-                    position: "absolute",
-                    right: -115,
-                    bottom: -20,
-                  }}
-                  alt=""
-                />
-                <Row
-                  className="align-items-end justify-items-end"
-                  style={{ marginTop: "30%" }}
-                >
-                  <Col>
-                    <Button
-                      style={{ borderRadius: 50 }}
-                      variant="outline-light"
-                      className="w-100"
-                      onClick={() => history.push("/signup")}
-                    >
-                      Sign Up
-                    </Button>
-                  </Col>
-                  <Col></Col>
-                </Row>
-              </Card.Body>
-            </Card>
-          </div>
-        </Container>
-      </Col>
-      <Col>
-        <Container
-          className="d-flex align-items-center justify-content-center"
-          style={{ minHeight: "100vh" }}
-        >
-          <div className="w-100" style={{ maxWidth: "400px" }}>
-            <Card className="card-shadow">
-              <Card.Body>
-                <h2 className="text-center mb-4">Login</h2>
-                {error && <Alert variant="danger">{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
-                  <Form.Group id="email">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" ref={emailRef} required />
-                  </Form.Group>
-                  <Form.Group id="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" ref={passwordRef} required />
-                  </Form.Group>
-                  <br />
-                  <Button className="w-100" type="submit" disabled={loading}>
-                    Login
-                  </Button>
-                </Form>
-                <div className="w-100 text-center mt-3">
-                  <Link to="/signup">Need an account? Sign Up</Link>
-                </div>
-              </Card.Body>
-            </Card>
-          </div>
-        </Container>
-      </Col>
-    </Row>
+              Login
+            </Button>
+          </Form>
+          <p className="auth-link">
+            Need an account? <Link to="/signup">Sign Up</Link>
+          </p>
+        </div>
+      </section>
+    </main>
   );
 };
 
