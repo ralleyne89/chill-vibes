@@ -1,8 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
+import { getAuthErrorMessage } from "../utils/authErrors";
 import Background from "../images/background.png";
-import { useHistory, Link, Redirect, useLocation } from "react-router-dom";
+import Nero from "../images/nero.png";
+import { useHistory, Link, useLocation } from "react-router-dom";
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -11,13 +13,35 @@ const SignUp = () => {
   const passwordConfirmRef = useRef();
   const history = useHistory();
   const location = useLocation();
-  const { currentUser, isFirebaseConfigured, missingFirebaseConfig, signup } =
-    useAuth();
-  const redirectPath = location.state?.from?.pathname || "/";
+  const {
+    authError,
+    authLoading,
+    clearAuthError,
+    clearStoredGoogleRedirectPath,
+    currentUser,
+    getStoredGoogleRedirectPath,
+    isFirebaseConfigured,
+    missingFirebaseConfig,
+    signInWithGoogle,
+    signup,
+  } = useAuth();
+  const redirectPath =
+    getStoredGoogleRedirectPath() || location.state?.from?.pathname || "/";
 
-  if (currentUser) {
-    return <Redirect to={redirectPath} />;
-  }
+  useEffect(() => {
+    if (authError) {
+      setError(getAuthErrorMessage(authError, "Failed to finish Google sign-up"));
+    }
+  }, [authError]);
+
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    clearStoredGoogleRedirectPath();
+    history.replace(redirectPath);
+  }, [clearStoredGoogleRedirectPath, currentUser, history, redirectPath]);
+
   // FUNCTION TO HANDLE SIGNUP SUBMIT FOR FORM
   const handleSubmit = async (e) => {
     // PREVENT FORM FROM REFRESHING
@@ -27,12 +51,34 @@ const SignUp = () => {
     }
     try {
       setError("");
+      clearAuthError();
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
+      clearStoredGoogleRedirectPath();
+      setLoading(false);
       history.replace(redirectPath);
     } catch (error) {
-      setError("Failed to create an account: " + (error.message || ""));
-    } finally {
+      setError(getAuthErrorMessage(error, "Failed to create an account"));
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+    try {
+      setError("");
+      clearAuthError();
+      setLoading(true);
+      const result = await signInWithGoogle(redirectPath);
+      if (result?.status === "redirect") {
+        return;
+      }
+      if (result?.credential?.user) {
+        clearStoredGoogleRedirectPath();
+        setLoading(false);
+        history.replace(redirectPath);
+      }
+    } catch (error) {
+      setError(getAuthErrorMessage(error, "Failed to continue with Google"));
       setLoading(false);
     }
   };
@@ -71,11 +117,25 @@ const SignUp = () => {
             <Button
               className="auth-submit"
               type="submit"
-              disabled={loading || !isFirebaseConfigured}
+              disabled={loading || authLoading || !isFirebaseConfigured}
             >
               Sign Up
             </Button>
           </Form>
+          <div className="auth-divider" aria-hidden="true">
+            <span>or continue with</span>
+          </div>
+          <Button
+            className="google-auth-button"
+            type="button"
+            onClick={handleGoogleSignUp}
+            disabled={loading || authLoading || !isFirebaseConfigured}
+          >
+            <span className="google-mark" aria-hidden="true">
+              G
+            </span>
+            <span>Sign up with Google</span>
+          </Button>
           <p className="auth-link">
             Already have an account? <Link to="/login">Login</Link>
           </p>
@@ -92,6 +152,12 @@ const SignUp = () => {
           <Button type="button" variant="outline-light" onClick={handleLogin}>
             Login
           </Button>
+          <img
+            className="auth-mascot"
+            src={Nero}
+            alt=""
+            aria-hidden="true"
+          />
         </div>
       </section>
     </main>

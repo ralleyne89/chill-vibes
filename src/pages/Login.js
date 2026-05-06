@@ -1,8 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
+import { getAuthErrorMessage } from "../utils/authErrors";
 import Background from "../images/background.png";
-import { useHistory, Link, Redirect, useLocation } from "react-router-dom";
+import Nero from "../images/nero.png";
+import { useHistory, Link, useLocation } from "react-router-dom";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -11,13 +13,34 @@ const Login = () => {
   const passwordRef = useRef();
   const history = useHistory();
   const location = useLocation();
-  const { currentUser, isFirebaseConfigured, login, missingFirebaseConfig } =
-    useAuth();
-  const redirectPath = location.state?.from?.pathname || "/";
+  const {
+    authError,
+    authLoading,
+    clearAuthError,
+    clearStoredGoogleRedirectPath,
+    currentUser,
+    getStoredGoogleRedirectPath,
+    isFirebaseConfigured,
+    login,
+    missingFirebaseConfig,
+    signInWithGoogle,
+  } = useAuth();
+  const redirectPath =
+    getStoredGoogleRedirectPath() || location.state?.from?.pathname || "/";
 
-  if (currentUser) {
-    return <Redirect to={redirectPath} />;
-  }
+  useEffect(() => {
+    if (authError) {
+      setError(getAuthErrorMessage(authError, "Failed to finish Google sign-in"));
+    }
+  }, [authError]);
+
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    clearStoredGoogleRedirectPath();
+    history.replace(redirectPath);
+  }, [clearStoredGoogleRedirectPath, currentUser, history, redirectPath]);
 
   // FUNCTION TO HANDLE LOGIN SUBMIT FOR FORM
   const handleSubmit = async (e) => {
@@ -25,12 +48,34 @@ const Login = () => {
     e.preventDefault();
     try {
       setError("");
+      clearAuthError();
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
+      clearStoredGoogleRedirectPath();
+      setLoading(false);
       history.replace(redirectPath);
     } catch (error) {
-      setError("Failed to sign in: " + (error.message || ""));
-    } finally {
+      setError(getAuthErrorMessage(error, "Failed to sign in"));
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setError("");
+      clearAuthError();
+      setLoading(true);
+      const result = await signInWithGoogle(redirectPath);
+      if (result?.status === "redirect") {
+        return;
+      }
+      if (result?.credential?.user) {
+        clearStoredGoogleRedirectPath();
+        setLoading(false);
+        history.replace(redirectPath);
+      }
+    } catch (error) {
+      setError(getAuthErrorMessage(error, "Failed to sign in with Google"));
       setLoading(false);
     }
   };
@@ -51,6 +96,12 @@ const Login = () => {
           >
             Sign Up
           </Button>
+          <img
+            className="auth-mascot"
+            src={Nero}
+            alt=""
+            aria-hidden="true"
+          />
         </div>
       </section>
 
@@ -78,11 +129,25 @@ const Login = () => {
             <Button
               className="auth-submit"
               type="submit"
-              disabled={loading || !isFirebaseConfigured}
+              disabled={loading || authLoading || !isFirebaseConfigured}
             >
               Login
             </Button>
           </Form>
+          <div className="auth-divider" aria-hidden="true">
+            <span>or continue with</span>
+          </div>
+          <Button
+            className="google-auth-button"
+            type="button"
+            onClick={handleGoogleSignIn}
+            disabled={loading || authLoading || !isFirebaseConfigured}
+          >
+            <span className="google-mark" aria-hidden="true">
+              G
+            </span>
+            <span>Sign in with Google</span>
+          </Button>
           <p className="auth-link">
             Need an account? <Link to="/signup">Sign Up</Link>
           </p>
