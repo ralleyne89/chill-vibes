@@ -17,7 +17,7 @@ const Player = ({
   setSongInfo,
   songInfo,
   playSongHandler,
-  setCurrentSong,
+  onSongSelect,
 }) => {
   const [showSpeedControl, setShowSpeedControl] = useState(false);
   const [currentSpeed, setCurrentSpeed] = useState(1);
@@ -59,7 +59,7 @@ const Player = ({
         ? (safeIndex + 1) % songs.length
         : (safeIndex - 1 + songs.length) % songs.length;
 
-    setCurrentSong(songs[nextIndex]);
+    onSongSelect(songs[nextIndex], { play: isPlaying });
   };
 
   const changeSpeed = (speed) => {
@@ -167,7 +167,7 @@ Player.propTypes = {
   setSongInfo: PropTypes.func.isRequired,
   songInfo: PropTypes.object.isRequired,
   playSongHandler: PropTypes.func.isRequired,
-  setCurrentSong: PropTypes.func.isRequired,
+  onSongSelect: PropTypes.func.isRequired,
 };
 
 export default Player;

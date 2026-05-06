@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Library from "../components/Library";
 import Nav from "../components/Nav";
 import Player from "../components/Player";
@@ -51,6 +51,14 @@ const Home = () => {
     animationPercentage: 0,
   });
 
+  const resetSongInfo = useCallback(() => {
+    setSongInfo({
+      currentTime: 0,
+      duration: 0,
+      animationPercentage: 0,
+    });
+  }, []);
+
   const libraryStorageKey = currentUser?.uid
     ? `${STORAGE_PREFIX}:${currentUser.uid}`
     : null;
@@ -71,13 +79,9 @@ const Home = () => {
     setSongs(nextSongs);
     setCurrentSong(nextSongs[0] || null);
     setIsPlaying(false);
-    setSongInfo({
-      currentTime: 0,
-      duration: 0,
-      animationPercentage: 0,
-    });
+    resetSongInfo();
     setLibraryLoaded(true);
-  }, [libraryStorageKey]);
+  }, [libraryStorageKey, resetSongInfo]);
 
   useEffect(() => {
     if (!libraryLoaded || !libraryStorageKey) {
@@ -91,13 +95,15 @@ const Home = () => {
     if (songs.length === 0) {
       setCurrentSong(null);
       setIsPlaying(false);
+      resetSongInfo();
       return;
     }
 
     if (!currentSong || !songs.some((song) => song.id === currentSong.id)) {
       setCurrentSong(songs[0]);
+      resetSongInfo();
     }
-  }, [songs, currentSong]);
+  }, [songs, currentSong, resetSongInfo]);
 
   useEffect(() => {
     setSongs((currentSongs) => {
@@ -115,16 +121,54 @@ const Home = () => {
     setAudioError("");
   }, [currentSong?.id]);
 
+  const prepareAudioElement = useCallback((song) => {
+    if (!audioRef.current || !song?.audio) {
+      return null;
+    }
+
+    const nextSource = new URL(song.audio, window.location.origin).href;
+    if (audioRef.current.src !== nextSource) {
+      audioRef.current.src = nextSource;
+      audioRef.current.load();
+    }
+
+    return audioRef.current;
+  }, []);
+
   useEffect(() => {
-    if (!isPlaying || !audioRef.current || !currentSong) {
+    if (!currentSong || isPlaying) {
       return;
     }
 
-    audioRef.current.play().catch(() => {
+    prepareAudioElement(currentSong);
+  }, [currentSong, isPlaying, prepareAudioElement]);
+
+  const selectSongHandler = async (song, { play = isPlaying } = {}) => {
+    if (!song) {
+      return;
+    }
+
+    setCurrentSong(song);
+    resetSongInfo();
+    setAudioError("");
+
+    if (!play) {
+      return;
+    }
+
+    const audioElement = prepareAudioElement(song);
+    if (!audioElement) {
+      return;
+    }
+
+    try {
+      await audioElement.play();
+      setIsPlaying(true);
+    } catch {
       setIsPlaying(false);
       setAudioError("This track could not start. Try another song.");
-    });
-  }, [currentSong, isPlaying]);
+    }
+  };
 
   const timeUpdateHandler = (event) => {
     const current = event.target.currentTime || 0;
@@ -148,7 +192,8 @@ const Home = () => {
         audioRef.current.pause();
         setIsPlaying(false);
       } else {
-        await audioRef.current.play();
+        const audioElement = prepareAudioElement(currentSong);
+        await audioElement.play();
         setIsPlaying(true);
       }
       setAudioError("");
@@ -199,12 +244,12 @@ const Home = () => {
             playSongHandler={playSongHandler}
             isPlaying={isPlaying}
             currentSong={currentSong}
-            setCurrentSong={setCurrentSong}
+            onSongSelect={selectSongHandler}
           />
         )}
       </main>
       <Library
-        setCurrentSong={setCurrentSong}
+        onSongSelect={selectSongHandler}
         songs={songs}
         setSongs={setSongs}
         libraryStatus={libraryStatus}
@@ -222,7 +267,6 @@ const Home = () => {
         <audio
           onTimeUpdate={timeUpdateHandler}
           ref={audioRef}
-          src={currentSong.audio}
           onLoadedMetadata={timeUpdateHandler}
           onError={handleAudioError}
         />

@@ -10,7 +10,7 @@ import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 const LibrarySong = ({
   song,
   songs,
-  setCurrentSong,
+  onSongSelect,
   id,
   setSongs,
 }) => {
@@ -27,7 +27,7 @@ const LibrarySong = ({
 
   // Event Handler
   const songSelectHandler = () => {
-    setCurrentSong(song);
+    onSongSelect(song);
   };
 
   // Toggle favorite status
@@ -125,7 +125,7 @@ const LibrarySong = ({
 LibrarySong.propTypes = {
   song: PropTypes.object.isRequired,
   songs: PropTypes.array.isRequired,
-  setCurrentSong: PropTypes.func.isRequired,
+  onSongSelect: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   setSongs: PropTypes.func.isRequired,
 };

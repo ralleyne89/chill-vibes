@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const Library = ({
-  setCurrentSong,
+  onSongSelect,
   songs,
   setSongs,
   libraryStatus,
@@ -73,7 +73,7 @@ const Library = ({
         ) : (
           filteredSongs.map((song) => (
             <LibrarySong
-              setCurrentSong={setCurrentSong}
+              onSongSelect={onSongSelect}
               song={song}
               songs={songs}
               id={song.id}
@@ -91,7 +91,7 @@ const Library = ({
 };
 
 Library.propTypes = {
-  setCurrentSong: PropTypes.func.isRequired,
+  onSongSelect: PropTypes.func.isRequired,
   songs: PropTypes.array.isRequired,
   setSongs: PropTypes.func.isRequired,
   libraryStatus: PropTypes.bool.isRequired,
