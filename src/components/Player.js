@@ -78,7 +78,8 @@ const Player = ({
         <div
           className="track"
           style={{
-            background: `linear-gradient(to right, ${currentSong.color[0]}, ${currentSong.color[1]})`,
+            background:
+              "linear-gradient(to right, var(--accent-strong), var(--accent), #6bbcff)",
           }}
         >
           <input

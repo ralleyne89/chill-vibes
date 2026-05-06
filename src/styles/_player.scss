@@ -65,7 +65,7 @@
   &:hover {
     transform: translateY(-1px);
     color: var(--accent-strong);
-    border-color: rgba(15, 139, 141, 0.32);
+    border-color: var(--accent-border);
     background: var(--accent-soft);
   }
 }
@@ -156,7 +156,7 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
   background: var(--surface-strong);
   border: 2px solid var(--accent);
-  box-shadow: 0 0 0 4px rgba(15, 139, 141, 0.12);
+  box-shadow: 0 0 0 4px var(--accent-glow);
 }
 
 .track {

@@ -5,17 +5,19 @@
 }
 
 :root {
-  --bg: #f6f3ee;
-  --surface: #fffdf8;
+  --bg: #f4f8ff;
+  --surface: #fbfdff;
   --surface-strong: #ffffff;
-  --text: #1f2328;
-  --muted: #71717a;
-  --border: rgba(31, 35, 40, 0.12);
-  --shadow: 0 22px 80px rgba(31, 35, 40, 0.16);
-  --accent: #0f8b8d;
-  --accent-strong: #0a6c6e;
-  --accent-soft: rgba(15, 139, 141, 0.12);
-  --warm: #f2a541;
+  --text: #172033;
+  --muted: #64748b;
+  --border: rgba(23, 32, 51, 0.12);
+  --shadow: 0 22px 80px rgba(0, 40, 92, 0.14);
+  --accent: #0052a9;
+  --accent-strong: #00458e;
+  --accent-soft: rgba(0, 82, 169, 0.12);
+  --accent-border: rgba(0, 82, 169, 0.32);
+  --accent-glow: rgba(0, 82, 169, 0.14);
+  --warm: #6bbcff;
   --danger: #d64550;
   --radius: 8px;
 }
@@ -54,9 +56,9 @@ p {
 .App {
   min-height: 100vh;
   background:
-    linear-gradient(180deg, rgba(255, 253, 248, 0.92), rgba(246, 243, 238, 0.92)),
-    radial-gradient(circle at 20% 20%, rgba(15, 139, 141, 0.12), transparent 32%),
-    radial-gradient(circle at 80% 10%, rgba(242, 165, 65, 0.16), transparent 26%);
+    linear-gradient(180deg, rgba(251, 253, 255, 0.94), rgba(244, 248, 255, 0.94)),
+    radial-gradient(circle at 20% 20%, rgba(0, 82, 169, 0.13), transparent 32%),
+    radial-gradient(circle at 80% 10%, rgba(107, 188, 255, 0.12), transparent 26%);
 }
 
 .player-shell {

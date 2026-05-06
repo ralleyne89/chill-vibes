@@ -154,7 +154,7 @@
     &:hover {
       background: var(--accent-soft);
       color: var(--accent-strong);
-      border-color: rgba(15, 139, 141, 0.3);
+      border-color: var(--accent-border);
     }
 
     &.active {
@@ -271,7 +271,7 @@
         align-items: center;
         justify-content: center;
         background: var(--surface);
-        border: 1px solid rgba(15, 139, 141, 0.42);
+        border: 1px solid var(--accent-border);
         color: var(--accent-strong);
         transition: background 180ms ease, color 180ms ease, transform 180ms ease;
 
@@ -282,8 +282,8 @@
         }
 
         &.added {
-          background: #2f9e44;
-          border-color: #2f9e44;
+          background: var(--accent-strong);
+          border-color: var(--accent-strong);
           color: white;
           cursor: default;
         }

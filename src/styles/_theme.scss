@@ -11,17 +11,19 @@
 }
 
 body.dark-theme {
-  --bg: #141313;
-  --surface: #1f1f1d;
-  --surface-strong: #242421;
-  --text: #f5f1e8;
-  --muted: #b6b0a6;
-  --border: rgba(245, 241, 232, 0.13);
-  --shadow: 0 24px 90px rgba(0, 0, 0, 0.42);
-  --accent: #4db6ac;
-  --accent-strong: #7dd8cf;
-  --accent-soft: rgba(77, 182, 172, 0.14);
-  --warm: #f4b860;
+  --bg: #0b1220;
+  --surface: #101a2a;
+  --surface-strong: #142238;
+  --text: #f2f7ff;
+  --muted: #b7c5d8;
+  --border: rgba(242, 247, 255, 0.13);
+  --shadow: 0 24px 90px rgba(0, 0, 0, 0.48);
+  --accent: #6bbcff;
+  --accent-strong: #a9d8ff;
+  --accent-soft: rgba(107, 188, 255, 0.16);
+  --accent-border: rgba(107, 188, 255, 0.38);
+  --accent-glow: rgba(107, 188, 255, 0.18);
+  --warm: #d2ebff;
   --danger: #ff7a85;
 
   background: var(--bg);
@@ -29,13 +31,13 @@ body.dark-theme {
 
   .App {
     background:
-      linear-gradient(180deg, rgba(20, 19, 19, 0.92), rgba(20, 19, 19, 0.96)),
-      radial-gradient(circle at 16% 18%, rgba(77, 182, 172, 0.16), transparent 32%),
-      radial-gradient(circle at 78% 10%, rgba(244, 184, 96, 0.12), transparent 26%);
+      linear-gradient(180deg, rgba(11, 18, 32, 0.92), rgba(11, 18, 32, 0.96)),
+      radial-gradient(circle at 16% 18%, rgba(107, 188, 255, 0.18), transparent 32%),
+      radial-gradient(circle at 78% 10%, rgba(0, 82, 169, 0.2), transparent 26%);
   }
 
   nav {
-    background: rgba(31, 31, 29, 0.9);
+    background: rgba(16, 26, 42, 0.9);
   }
 
   .player,
@@ -45,7 +47,7 @@ body.dark-theme {
   }
 
   .animate-track {
-    background: rgba(20, 19, 19, 0.72);
+    background: rgba(11, 18, 32, 0.72);
   }
 
   .audio-error {
