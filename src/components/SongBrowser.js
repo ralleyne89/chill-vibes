@@ -8,6 +8,7 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { createLibrarySong } from "../data";
+import { getFallbackCover } from "../utils/covers";
 
 const SongBrowser = ({ catalog, songs, setSongs, isOpen, setIsOpen }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -183,8 +184,8 @@ const SongBrowser = ({ catalog, songs, setSongs, isOpen, setIsOpen }) => {
                     src={song.cover}
                     alt={song.name}
                     onError={(e) => {
-                      e.currentTarget.src =
-                        "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=500&auto=format&fit=crop";
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = getFallbackCover(song.id);
                     }}
                   />
                   <div className="song-details">

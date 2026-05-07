@@ -20,7 +20,7 @@ Chill Vibes is a React music player for saving and browsing relaxed listening se
 ## Features
 
 - Firebase Email/Password and Google signup, login, logout, and protected app routes.
-- Curated 37-track catalog with stable song IDs, genre, mood, duration, cover art, audio source, and license/source metadata.
+- Curated 61-track catalog with stable song IDs, genre, mood, duration, cover art, audio source, and license/source metadata.
 - Browse panel with search across title, artist, genre, and mood, plus genre and mood filter chips.
 - Per-user library persistence keyed by Firebase `currentUser.uid`.
 - Duplicate prevention, favorites, removal, empty states, and reload-safe saved library state.
@@ -44,7 +44,7 @@ Chill Vibes is a React music player for saving and browsing relaxed listening se
 - Node.js `>=16.0.0`, as declared in `package.json`.
 - npm with lockfile support. This repo includes `package-lock.json`, so use npm instead of Yarn unless you intentionally migrate package managers.
 - A Firebase project with a registered web app if you want authentication to work locally.
-- Network access for Firebase plus the external cover image and audio URLs used by the catalog.
+- Network access for Firebase plus the external cover images and audio URLs used by the catalog.
 
 ## Quick Start
 
@@ -152,7 +152,7 @@ The music catalog lives in `src/data.js`. Each catalog item includes:
 
 The initial saved library comes from `defaultLibraryIds` in `src/data.js`. User changes are stored in `localStorage` under `chill-vibes-library:<firebase-uid>`, and the theme preference is stored under `darkMode`.
 
-The current catalog uses royalty-free Pixabay audio references and points source metadata to the [Pixabay Content License Summary](https://pixabay.com/service/license-summary/).
+The current catalog uses royalty-free Pixabay audio references and points source metadata to the [Pixabay Content License Summary](https://pixabay.com/service/license-summary/). The 61 tracks use distinct MP3 URLs so the player does not fall back to repeated short demo loops.
 
 ## Build and Deployment
 

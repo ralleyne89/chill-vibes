@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { getFallbackCover } from "../utils/covers";
 
 const Song = ({ currentSong }) => {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const fallbackImage =
-    "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=500&auto=format&fit=crop";
+  const fallbackImage = getFallbackCover(currentSong.id);
 
   // Reset states when song changes
   useEffect(() => {
@@ -14,6 +14,9 @@ const Song = ({ currentSong }) => {
   }, [currentSong]);
 
   const handleImageError = () => {
+    if (imageError) {
+      return;
+    }
     setImageError(true);
     setIsLoading(false);
   };

@@ -1,23 +1,265 @@
-const localAudioSource = {
-  label: "Chill Vibes",
-  license: "Generated demo audio",
-  url: "/audio/",
+const pixabaySource = {
+  label: "Pixabay",
+  license: "Pixabay Content License",
+  url: "https://pixabay.com/service/license-summary/",
 };
 
-export const songCatalog = [
+const audioBySongId = {
+  "peaceful-mind": {
+    durationLabel: "2:27",
+    audio: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3",
+  },
+  "rainy-days": {
+    durationLabel: "2:53",
+    audio: "https://cdn.pixabay.com/download/audio/2022/08/14/audio_9289a45f56.mp3?filename=in-the-room-when-the-rain-pouring-117209.mp3",
+  },
+  "coffee-shop": {
+    durationLabel: "2:20",
+    audio: "https://cdn.pixabay.com/download/audio/2021/07/27/audio_6623aaf984.mp3?filename=chilled-acoustic-indie-folk-instrumental-background-music-for-videos-5720.mp3",
+  },
+  "midnight-study": {
+    durationLabel: "2:24",
+    audio: "https://cdn.pixabay.com/download/audio/2025/12/14/audio_de38cecd46.mp3?filename=chill-study-desk-focus-amp-concentration-lofi-451181.mp3",
+  },
+  "urban-nostalgia": {
+    durationLabel: "3:46",
+    audio: "https://cdn.pixabay.com/download/audio/2021/04/07/audio_8ed06844ef.mp3?filename=nightlife-michael-kobrin-95bpm-3783.mp3",
+  },
+  "sunset-memories": {
+    durationLabel: "3:03",
+    audio: "https://cdn.pixabay.com/download/audio/2021/08/08/audio_dc39bde808.mp3?filename=cinematic-chillhop-main-6676.mp3",
+  },
+  "dreamy-haze": {
+    durationLabel: "6:48",
+    audio: "https://cdn.pixabay.com/download/audio/2026/02/23/audio_9155a8528a.mp3?filename=quietphase-deep-ambient-489703.mp3",
+  },
+  "morning-routine": {
+    durationLabel: "1:29",
+    audio: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_d65ec060b3.mp3?filename=coding-night-112186.mp3",
+  },
+  "cozy-winter": {
+    durationLabel: "1:27",
+    audio: "https://cdn.pixabay.com/download/audio/2021/09/27/audio_07dbf394a9.mp3?filename=watching-the-stars-background-music-for-video-8756.mp3",
+  },
+  "focus-time": {
+    durationLabel: "4:00",
+    audio: "https://cdn.pixabay.com/download/audio/2024/11/26/audio_32bf2ee6f7.mp3?filename=lo-fi-focus-269100.mp3",
+  },
+  "midnight-jazz": {
+    durationLabel: "1:42",
+    audio: "https://cdn.pixabay.com/download/audio/2022/10/25/audio_532a18db2a.mp3?filename=for-elevator-jazz-music-124005.mp3",
+  },
+  "blue-notes": {
+    durationLabel: "3:37",
+    audio: "https://cdn.pixabay.com/download/audio/2025/02/19/audio_2802b6fb04.mp3?filename=relaxing-jazz-saxophone-music-saxophone-instruments-music-303093.mp3",
+  },
+  "saxophone-dreams": {
+    durationLabel: "3:06",
+    audio: "https://cdn.pixabay.com/download/audio/2024/10/22/audio_5b87be5f9b.mp3?filename=smooth-jazz-saxophone-solo-with-a-lofi-vibe-253950.mp3",
+  },
+  "morning-coffee": {
+    durationLabel: "2:15",
+    audio: "https://cdn.pixabay.com/download/audio/2021/07/24/audio_c2bf654098.mp3?filename=acoustic-guitars-ambient-uplifting-background-music-for-videos-5642.mp3",
+  },
+  "cafe-ambience": {
+    durationLabel: "2:23",
+    audio: "https://cdn.pixabay.com/download/audio/2021/07/22/audio_c53c82ad19.mp3?filename=happy-at-home-background-music-for-videos-5607.mp3",
+  },
+  "acoustic-sunrise": {
+    durationLabel: "1:52",
+    audio: "https://cdn.pixabay.com/download/audio/2021/08/27/audio_e22212cafc.mp3?filename=moon-acoustic-vibes-calm-acoustic-guitar-background-music-for-videos-7768.mp3",
+  },
+  "urban-dreams": {
+    durationLabel: "3:16",
+    audio: "https://cdn.pixabay.com/download/audio/2024/11/29/audio_45bbd49c34.mp3?filename=lost-in-dreams-abstract-chill-downtempo-cinematic-future-beats-270241.mp3",
+  },
+  "neon-lights": {
+    durationLabel: "2:06",
+    audio: "https://cdn.pixabay.com/download/audio/2022/08/23/audio_d16737dc28.mp3?filename=electronic-future-beats-117997.mp3",
+  },
+  "downtown-groove": {
+    durationLabel: "2:22",
+    audio: "https://cdn.pixabay.com/download/audio/2022/02/07/audio_f972decc9f.mp3?filename=vlog-groovy-hip-hop-18304.mp3",
+  },
+  "ocean-waves": {
+    durationLabel: "2:16",
+    audio: "https://cdn.pixabay.com/download/audio/2026/03/31/audio_73e67207be.mp3?filename=meditativetiger-deep-mindful-breathing-waves-511815.mp3",
+  },
+  "rainy-day": {
+    durationLabel: "2:47",
+    audio: "https://cdn.pixabay.com/download/audio/2025/03/20/audio_866bd173d3.mp3?filename=rain-cocoon-316178.mp3",
+  },
+  "forest-meditation": {
+    durationLabel: "2:26",
+    audio: "https://cdn.pixabay.com/download/audio/2026/05/01/audio_ff8edc19a6.mp3?filename=jonasblakewood-nature-519884.mp3",
+  },
+  "sunset-groove": {
+    durationLabel: "1:07",
+    audio: "https://cdn.pixabay.com/download/audio/2021/12/22/audio_9da2a60074.mp3?filename=penguinmusic-modern-chillout-future-calm-12641.mp3",
+  },
+  "winter-chill": {
+    durationLabel: "1:36",
+    audio: "https://cdn.pixabay.com/download/audio/2025/07/23/audio_b0cf6052c9.mp3?filename=nastelbom-good-morning-379069.mp3",
+  },
+  "autumn-leaves": {
+    durationLabel: "3:31",
+    audio: "https://cdn.pixabay.com/download/audio/2021/07/27/audio_6d7cd70222.mp3?filename=inspiring-cinematic-background-music-for-videos-5717.mp3",
+  },
+  "deep-focus": {
+    durationLabel: "1:47",
+    audio: "https://cdn.pixabay.com/download/audio/2024/11/26/audio_24ad329374.mp3?filename=lofcosmos-focus-lofi-269097.mp3",
+  },
+  "concentration": {
+    durationLabel: "2:01",
+    audio: "https://cdn.pixabay.com/download/audio/2024/11/26/audio_dd17a363fa.mp3?filename=lofcosmos-focus-glow-lofi-269098.mp3",
+  },
+  "productive-morning": {
+    durationLabel: "2:31",
+    audio: "https://cdn.pixabay.com/download/audio/2023/01/28/audio_31be9edfbf.mp3?filename=the_mountain-inspiring-focus-137045.mp3",
+  },
+  "soft-static": {
+    durationLabel: "2:24",
+    audio: "https://cdn.pixabay.com/download/audio/2022/06/25/audio_4ca472b499.mp3?filename=lofi-vibes-113884.mp3",
+  },
+  "after-hours": {
+    durationLabel: "3:11",
+    audio: "https://cdn.pixabay.com/download/audio/2025/04/01/audio_8aad6c9b22.mp3?filename=sax-solo-jazz-321543.mp3",
+  },
+  "porch-light": {
+    durationLabel: "1:59",
+    audio: "https://cdn.pixabay.com/download/audio/2021/07/27/audio_202082aa0b.mp3?filename=in-the-forest-ambient-acoustic-guitar-instrumental-background-music-for-videos-5718.mp3",
+  },
+  "low-clouds": {
+    durationLabel: "5:40",
+    audio: "https://cdn.pixabay.com/download/audio/2020/08/30/audio_926fbf0b66.mp3?filename=modular-ambient-04-792.mp3",
+  },
+  "moonlit-room": {
+    durationLabel: "4:54",
+    audio: "https://cdn.pixabay.com/download/audio/2020/08/30/audio_be9f2675c8.mp3?filename=modular-ambient-01-789.mp3",
+  },
+  "desk-lamp": {
+    durationLabel: "2:27",
+    audio: "https://cdn.pixabay.com/download/audio/2023/02/24/audio_5b1df4684b.mp3?filename=the_mountain-focus-pop-140470.mp3",
+  },
+  "harbor-lights": {
+    durationLabel: "4:52",
+    audio: "https://cdn.pixabay.com/download/audio/2026/03/27/audio_29438b848e.mp3?filename=leberch-calm-509708.mp3",
+  },
+  "subway-window": {
+    durationLabel: "2:26",
+    audio: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_e6db7e7e8e.mp3?filename=street-food-112193.mp3",
+  },
+  "spring-air": {
+    durationLabel: "1:48",
+    audio: "https://cdn.pixabay.com/download/audio/2021/09/25/audio_769e1c9f43.mp3?filename=inspiring-cinematic-uplifting-piano-short-8701.mp3",
+  },
+  "window-seat": {
+    durationLabel: "4:04",
+    audio: "https://cdn.pixabay.com/download/audio/2022/07/17/audio_9e63152ebb.mp3?filename=lofi-in-the-bank-115135.mp3",
+  },
+  "sleepy-cassette": {
+    durationLabel: "1:51",
+    audio: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=lofi-study-112191.mp3",
+  },
+  "quiet-block": {
+    durationLabel: "2:15",
+    audio: "https://cdn.pixabay.com/download/audio/2022/10/16/audio_ffa3e91f8b.mp3?filename=close-study-relax-chillhop-calm-study-lofi-123089.mp3",
+  },
+  "back-porch-noon": {
+    durationLabel: "3:04",
+    audio: "https://cdn.pixabay.com/download/audio/2021/09/27/audio_f42b1e426a.mp3?filename=sublime-journey-upbeat-indie-background-music-8755.mp3",
+  },
+  "worn-strings": {
+    durationLabel: "1:53",
+    audio: "https://cdn.pixabay.com/download/audio/2021/07/26/audio_c8102c4eae.mp3?filename=emotional-piano-sad-background-music-for-videos-5688.mp3",
+  },
+  "soft-kitchen-light": {
+    durationLabel: "2:20",
+    audio: "https://cdn.pixabay.com/download/audio/2021/07/22/audio_9584aae297.mp3?filename=freedom-inspired-cinematic-background-music-for-video-5606.mp3",
+  },
+  "library-glow": {
+    durationLabel: "1:38",
+    audio: "https://cdn.pixabay.com/download/audio/2026/04/02/audio_bd62ee26cb.mp3?filename=the_mountain-study-513400.mp3",
+  },
+  "task-flow": {
+    durationLabel: "1:54",
+    audio: "https://cdn.pixabay.com/download/audio/2023/03/20/audio_6dbd737342.mp3?filename=the_mountain-cosmic-study-143288.mp3",
+  },
+  "page-turns": {
+    durationLabel: "2:33",
+    audio: "https://cdn.pixabay.com/download/audio/2023/04/19/audio_fc0596ff1e.mp3?filename=the_mountain-space-study-146969.mp3",
+  },
+  "rooftop-walk": {
+    durationLabel: "2:07",
+    audio: "https://cdn.pixabay.com/download/audio/2022/08/25/audio_4f3b0a816e.mp3?filename=tuesday-glitch-soft-hip-hop-118327.mp3",
+  },
+  "night-bus": {
+    durationLabel: "2:12",
+    audio: "https://cdn.pixabay.com/download/audio/2025/05/21/audio_fa20813ea6.mp3?filename=jungle-waves-drumampbass-electronic-inspiring-promo-345013.mp3",
+  },
+  "corner-store": {
+    durationLabel: "2:16",
+    audio: "https://cdn.pixabay.com/download/audio/2024/04/12/audio_3118cb3f2a.mp3?filename=groovy-ambient-funk-201745.mp3",
+  },
+  "first-snow-walk": {
+    durationLabel: "1:42",
+    audio: "https://cdn.pixabay.com/download/audio/2025/06/04/audio_064e539995.mp3?filename=leberch-relaxation-morning-354986.mp3",
+  },
+  "july-evening": {
+    durationLabel: "2:24",
+    audio: "https://cdn.pixabay.com/download/audio/2026/04/15/audio_1b8d731335.mp3?filename=jonasblakewood-background-music-519872.mp3",
+  },
+  "maple-street": {
+    durationLabel: "2:49",
+    audio: "https://cdn.pixabay.com/download/audio/2021/09/27/audio_91dc5d749a.mp3?filename=chilling-ego-8753.mp3",
+  },
+  "slow-orbit": {
+    durationLabel: "1:35",
+    audio: "https://cdn.pixabay.com/download/audio/2021/08/27/audio_6013a54b35.mp3?filename=cinematic-ambient-feeling-ambient-piano-music-for-videos-7767.mp3",
+  },
+  "still-water": {
+    durationLabel: "1:28",
+    audio: "https://cdn.pixabay.com/download/audio/2021/12/13/audio_b9c0dc9e48.mp3?filename=chill-abstract-intention-12099.mp3",
+  },
+  "cloud-room": {
+    durationLabel: "6:01",
+    audio: "https://cdn.pixabay.com/download/audio/2024/11/11/audio_5185f3b518.mp3?filename=leberch-relaxing-sleep-263067.mp3",
+  },
+  "velvet-blue": {
+    durationLabel: "4:00",
+    audio: "https://cdn.pixabay.com/download/audio/2025/02/26/audio_af3ca465ca.mp3?filename=smooth-jazz-cafe-session-1-306314.mp3",
+  },
+  "after-rain": {
+    durationLabel: "1:55",
+    audio: "https://cdn.pixabay.com/download/audio/2025/02/26/audio_d1c79b5797.mp3?filename=smooth-jazz-cafe-session-3-306316.mp3",
+  },
+  "brass-lantern": {
+    durationLabel: "1:25",
+    audio: "https://cdn.pixabay.com/download/audio/2021/11/25/audio_91b32e02f9.mp3?filename=jazzy-abstract-beat-11254.mp3",
+  },
+  "meadow-hum": {
+    durationLabel: "1:33",
+    audio: "https://cdn.pixabay.com/download/audio/2026/03/28/audio_d9c302b745.mp3?filename=atlasaudio-calm-nature-510279.mp3",
+  },
+  "creekside": {
+    durationLabel: "1:32",
+    audio: "https://cdn.pixabay.com/download/audio/2026/04/21/audio_93d9e7ab7b.mp3?filename=leberch-documentary-nature-516419.mp3",
+  },
+  "pine-trail": {
+    durationLabel: "2:54",
+    audio: "https://cdn.pixabay.com/download/audio/2026/04/21/audio_a53bfc4928.mp3?filename=atlasaudio-nature-519434.mp3",
+  },
+};
+
+const songCatalogBase = [
   {
     id: "peaceful-mind",
     name: "Peaceful Mind",
     artist: "LoFi Dreamer",
     genre: "Lo-fi",
     mood: "Calm",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1571449996270-27835ea047b8?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?q=80&w=500&auto=format&fit=crop",
     color: ["#205950", "#2ab3bf"],
-    audio:
-      "/audio/chill-loop-01.wav",
-    source: localAudioSource,
   },
   {
     id: "rainy-days",
@@ -25,13 +267,8 @@ export const songCatalog = [
     artist: "Mellow Beats",
     genre: "Lo-fi",
     mood: "Rainy",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=500&auto=format&fit=crop",
     color: ["#1d2731", "#f17e76"],
-    audio:
-      "/audio/chill-loop-02.wav",
-    source: localAudioSource,
   },
   {
     id: "coffee-shop",
@@ -39,13 +276,8 @@ export const songCatalog = [
     artist: "Jazzy Vibes",
     genre: "Acoustic",
     mood: "Cozy",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=500&auto=format&fit=crop",
     color: ["#2a416d", "#f5b0cb"],
-    audio:
-      "/audio/chill-loop-03.wav",
-    source: localAudioSource,
   },
   {
     id: "midnight-study",
@@ -53,13 +285,8 @@ export const songCatalog = [
     artist: "Sleepy Tunes",
     genre: "Study",
     mood: "Focus",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1562832135-14a35d25edef?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1562832135-14a35d25edef?q=80&w=500&auto=format&fit=crop",
     color: ["#334d50", "#cbe6c1"],
-    audio:
-      "/audio/chill-loop-04.wav",
-    source: localAudioSource,
   },
   {
     id: "urban-nostalgia",
@@ -67,13 +294,8 @@ export const songCatalog = [
     artist: "City Sounds",
     genre: "Urban",
     mood: "Nostalgic",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1519608487953-e999c86e7455?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?q=80&w=500&auto=format&fit=crop",
     color: ["#5f8d4e", "#a4be7b"],
-    audio:
-      "/audio/chill-loop-05.wav",
-    source: localAudioSource,
   },
   {
     id: "sunset-memories",
@@ -81,13 +303,8 @@ export const songCatalog = [
     artist: "Chill Wave",
     genre: "Seasonal",
     mood: "Warm",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1499415479124-43c32433a620?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1499415479124-43c32433a620?q=80&w=500&auto=format&fit=crop",
     color: ["#5c8374", "#183d3d"],
-    audio:
-      "/audio/chill-loop-05.wav",
-    source: localAudioSource,
   },
   {
     id: "dreamy-haze",
@@ -95,13 +312,8 @@ export const songCatalog = [
     artist: "Ambient Beats",
     genre: "Ambient",
     mood: "Dreamy",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=500&auto=format&fit=crop",
     color: ["#3f2e3e", "#a46060"],
-    audio:
-      "/audio/chill-loop-06.wav",
-    source: localAudioSource,
   },
   {
     id: "morning-routine",
@@ -109,13 +321,8 @@ export const songCatalog = [
     artist: "Sunrise Sounds",
     genre: "Lo-fi",
     mood: "Bright",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=500&auto=format&fit=crop",
     color: ["#4c3a51", "#774360"],
-    audio:
-      "/audio/chill-loop-07.wav",
-    source: localAudioSource,
   },
   {
     id: "cozy-winter",
@@ -123,13 +330,8 @@ export const songCatalog = [
     artist: "Snowy Beats",
     genre: "Seasonal",
     mood: "Cozy",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=500&auto=format&fit=crop",
     color: ["#b04759", "#f15a59"],
-    audio:
-      "/audio/chill-loop-08.wav",
-    source: localAudioSource,
   },
   {
     id: "focus-time",
@@ -137,13 +339,8 @@ export const songCatalog = [
     artist: "Study Sessions",
     genre: "Study",
     mood: "Focus",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=500&auto=format&fit=crop",
     color: ["#ffc3c8", "#ff8989"],
-    audio:
-      "/audio/chill-loop-09.wav",
-    source: localAudioSource,
   },
   {
     id: "midnight-jazz",
@@ -151,13 +348,8 @@ export const songCatalog = [
     artist: "Jazz Ensemble",
     genre: "Jazz",
     mood: "Night",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=500&auto=format&fit=crop",
     color: ["#2c3e50", "#4ca1af"],
-    audio:
-      "/audio/chill-loop-10.wav",
-    source: localAudioSource,
   },
   {
     id: "blue-notes",
@@ -165,13 +357,8 @@ export const songCatalog = [
     artist: "Jazz Quartet",
     genre: "Jazz",
     mood: "Smooth",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?q=80&w=500&auto=format&fit=crop",
     color: ["#1b365d", "#6daedb"],
-    audio:
-      "/audio/chill-loop-02.wav",
-    source: localAudioSource,
   },
   {
     id: "saxophone-dreams",
@@ -179,13 +366,8 @@ export const songCatalog = [
     artist: "Smooth Jazz",
     genre: "Jazz",
     mood: "Dreamy",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1541804627596-3b5b9ef58c93?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1541804627596-3b5b9ef58c93?q=80&w=500&auto=format&fit=crop",
     color: ["#53354a", "#e84545"],
-    audio:
-      "/audio/chill-loop-03.wav",
-    source: localAudioSource,
   },
   {
     id: "morning-coffee",
@@ -193,13 +375,8 @@ export const songCatalog = [
     artist: "Acoustic Vibes",
     genre: "Acoustic",
     mood: "Bright",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=500&auto=format&fit=crop",
     color: ["#e8cbc0", "#636fa4"],
-    audio:
-      "/audio/chill-loop-11.wav",
-    source: localAudioSource,
   },
   {
     id: "cafe-ambience",
@@ -207,13 +384,8 @@ export const songCatalog = [
     artist: "Coffee House",
     genre: "Acoustic",
     mood: "Cozy",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=500&auto=format&fit=crop",
     color: ["#7b4397", "#dc2430"],
-    audio:
-      "/audio/chill-loop-01.wav",
-    source: localAudioSource,
   },
   {
     id: "acoustic-sunrise",
@@ -221,13 +393,8 @@ export const songCatalog = [
     artist: "Morning Melodies",
     genre: "Acoustic",
     mood: "Warm",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=500&auto=format&fit=crop",
     color: ["#f2994a", "#2d9cdb"],
-    audio:
-      "/audio/chill-loop-08.wav",
-    source: localAudioSource,
   },
   {
     id: "urban-dreams",
@@ -235,13 +402,8 @@ export const songCatalog = [
     artist: "City Sounds",
     genre: "Urban",
     mood: "Late Night",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=500&auto=format&fit=crop",
     color: ["#3e5151", "#decba4"],
-    audio:
-      "/audio/chill-loop-02.wav",
-    source: localAudioSource,
   },
   {
     id: "neon-lights",
@@ -249,13 +411,8 @@ export const songCatalog = [
     artist: "Night City",
     genre: "Urban",
     mood: "Electric",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=500&auto=format&fit=crop",
     color: ["#03001e", "#ec38bc"],
-    audio:
-      "/audio/chill-loop-09.wav",
-    source: localAudioSource,
   },
   {
     id: "downtown-groove",
@@ -263,13 +420,8 @@ export const songCatalog = [
     artist: "Urban Beats",
     genre: "Urban",
     mood: "Groove",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=500&auto=format&fit=crop",
     color: ["#232526", "#ffb347"],
-    audio:
-      "/audio/chill-loop-04.wav",
-    source: localAudioSource,
   },
   {
     id: "ocean-waves",
@@ -277,13 +429,8 @@ export const songCatalog = [
     artist: "Nature Sounds",
     genre: "Nature",
     mood: "Calm",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?q=80&w=500&auto=format&fit=crop",
     color: ["#2193b0", "#6dd5ed"],
-    audio:
-      "/audio/chill-loop-12.wav",
-    source: localAudioSource,
   },
   {
     id: "rainy-day",
@@ -291,13 +438,8 @@ export const songCatalog = [
     artist: "Ambient Sounds",
     genre: "Nature",
     mood: "Rainy",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=500&auto=format&fit=crop",
+    cover: "https://picsum.photos/seed/chill-vibes-rainy-day/500/500",
     color: ["#373b44", "#4286f4"],
-    audio:
-      "/audio/chill-loop-13.wav",
-    source: localAudioSource,
   },
   {
     id: "forest-meditation",
@@ -305,13 +447,8 @@ export const songCatalog = [
     artist: "Nature Therapy",
     genre: "Nature",
     mood: "Grounded",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=500&auto=format&fit=crop",
     color: ["#134e5e", "#71b280"],
-    audio:
-      "/audio/chill-loop-05.wav",
-    source: localAudioSource,
   },
   {
     id: "sunset-groove",
@@ -319,13 +456,8 @@ export const songCatalog = [
     artist: "Beach Vibes",
     genre: "Seasonal",
     mood: "Warm",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?q=80&w=500&auto=format&fit=crop",
     color: ["#ff9966", "#ff5e62"],
-    audio:
-      "/audio/chill-loop-03.wav",
-    source: localAudioSource,
   },
   {
     id: "winter-chill",
@@ -333,13 +465,8 @@ export const songCatalog = [
     artist: "Snow Beats",
     genre: "Seasonal",
     mood: "Cozy",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1483664852095-d6cc6870702d?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1483664852095-d6cc6870702d?q=80&w=500&auto=format&fit=crop",
     color: ["#7f7fd5", "#91eae4"],
-    audio:
-      "/audio/chill-loop-08.wav",
-    source: localAudioSource,
   },
   {
     id: "autumn-leaves",
@@ -347,13 +474,8 @@ export const songCatalog = [
     artist: "Fall Melodies",
     genre: "Seasonal",
     mood: "Nostalgic",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1507371341162-763b5e419408?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1507371341162-763b5e419408?q=80&w=500&auto=format&fit=crop",
     color: ["#8e2de2", "#f27121"],
-    audio:
-      "/audio/chill-loop-07.wav",
-    source: localAudioSource,
   },
   {
     id: "deep-focus",
@@ -361,13 +483,8 @@ export const songCatalog = [
     artist: "Study Beats",
     genre: "Study",
     mood: "Focus",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=500&auto=format&fit=crop",
     color: ["#603813", "#b29f94"],
-    audio:
-      "/audio/chill-loop-06.wav",
-    source: localAudioSource,
   },
   {
     id: "concentration",
@@ -375,13 +492,8 @@ export const songCatalog = [
     artist: "Focus Music",
     genre: "Study",
     mood: "Focus",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=500&auto=format&fit=crop",
     color: ["#4568dc", "#b06ab3"],
-    audio:
-      "/audio/chill-loop-14.wav",
-    source: localAudioSource,
   },
   {
     id: "productive-morning",
@@ -389,13 +501,8 @@ export const songCatalog = [
     artist: "Work Flow",
     genre: "Study",
     mood: "Bright",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=500&auto=format&fit=crop",
     color: ["#00b09b", "#96c93d"],
-    audio:
-      "/audio/chill-loop-05.wav",
-    source: localAudioSource,
   },
   {
     id: "soft-static",
@@ -403,13 +510,8 @@ export const songCatalog = [
     artist: "Tape Hiss",
     genre: "Lo-fi",
     mood: "Warm",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=500&auto=format&fit=crop",
     color: ["#141e30", "#ffd194"],
-    audio:
-      "/audio/chill-loop-11.wav",
-    source: localAudioSource,
   },
   {
     id: "after-hours",
@@ -417,13 +519,8 @@ export const songCatalog = [
     artist: "Velvet Keys",
     genre: "Jazz",
     mood: "Late Night",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=500&auto=format&fit=crop",
     color: ["#0f2027", "#2c5364"],
-    audio:
-      "/audio/chill-loop-10.wav",
-    source: localAudioSource,
   },
   {
     id: "porch-light",
@@ -431,13 +528,8 @@ export const songCatalog = [
     artist: "Quiet Strings",
     genre: "Acoustic",
     mood: "Calm",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=500&auto=format&fit=crop",
+    cover: "https://picsum.photos/seed/chill-vibes-porch-light/500/500",
     color: ["#614385", "#516395"],
-    audio:
-      "/audio/chill-loop-11.wav",
-    source: localAudioSource,
   },
   {
     id: "low-clouds",
@@ -445,13 +537,8 @@ export const songCatalog = [
     artist: "Grey Field",
     genre: "Ambient",
     mood: "Rainy",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=500&auto=format&fit=crop",
     color: ["#485563", "#29323c"],
-    audio:
-      "/audio/chill-loop-13.wav",
-    source: localAudioSource,
   },
   {
     id: "moonlit-room",
@@ -459,13 +546,8 @@ export const songCatalog = [
     artist: "Blue Window",
     genre: "Ambient",
     mood: "Night",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=500&auto=format&fit=crop",
     color: ["#16222a", "#3a6073"],
-    audio:
-      "/audio/chill-loop-06.wav",
-    source: localAudioSource,
   },
   {
     id: "desk-lamp",
@@ -473,13 +555,8 @@ export const songCatalog = [
     artist: "Quiet Hours",
     genre: "Study",
     mood: "Focus",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=500&auto=format&fit=crop",
     color: ["#1f1c2c", "#928dab"],
-    audio:
-      "/audio/chill-loop-14.wav",
-    source: localAudioSource,
   },
   {
     id: "harbor-lights",
@@ -487,13 +564,8 @@ export const songCatalog = [
     artist: "Marina Drift",
     genre: "Nature",
     mood: "Calm",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=500&auto=format&fit=crop",
     color: ["#136a8a", "#267871"],
-    audio:
-      "/audio/chill-loop-12.wav",
-    source: localAudioSource,
   },
   {
     id: "subway-window",
@@ -501,13 +573,8 @@ export const songCatalog = [
     artist: "Platform Nine",
     genre: "Urban",
     mood: "Nostalgic",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=500&auto=format&fit=crop",
     color: ["#283048", "#859398"],
-    audio:
-      "/audio/chill-loop-04.wav",
-    source: localAudioSource,
   },
   {
     id: "spring-air",
@@ -515,15 +582,232 @@ export const songCatalog = [
     artist: "Open Windows",
     genre: "Seasonal",
     mood: "Bright",
-    durationLabel: "0:28",
-    cover:
-      "https://images.unsplash.com/photo-1462275646964-a0e3386b89fa?q=80&w=500&auto=format&fit=crop",
+    cover: "https://images.unsplash.com/photo-1462275646964-a0e3386b89fa?q=80&w=500&auto=format&fit=crop",
     color: ["#56ab2f", "#a8e063"],
-    audio:
-      "/audio/chill-loop-07.wav",
-    source: localAudioSource,
+  },
+  {
+    id: "window-seat",
+    name: "Window Seat",
+    artist: "Tape Garden",
+    genre: "Lo-fi",
+    mood: "Calm",
+    cover: "https://picsum.photos/seed/chill-vibes-window-seat/500/500",
+    color: ["#1f4037", "#99f2c8"],
+  },
+  {
+    id: "sleepy-cassette",
+    name: "Sleepy Cassette",
+    artist: "Low Battery",
+    genre: "Lo-fi",
+    mood: "Warm",
+    cover: "https://picsum.photos/seed/chill-vibes-sleepy-cassette/500/500",
+    color: ["#232526", "#f3a183"],
+  },
+  {
+    id: "quiet-block",
+    name: "Quiet Block",
+    artist: "Sidewalk Sketches",
+    genre: "Lo-fi",
+    mood: "Nostalgic",
+    cover: "https://picsum.photos/seed/chill-vibes-quiet-block/500/500",
+    color: ["#355c7d", "#c06c84"],
+  },
+  {
+    id: "back-porch-noon",
+    name: "Back Porch Noon",
+    artist: "String Table",
+    genre: "Acoustic",
+    mood: "Warm",
+    cover: "https://picsum.photos/seed/chill-vibes-back-porch-noon/500/500",
+    color: ["#cc5333", "#23074d"],
+  },
+  {
+    id: "worn-strings",
+    name: "Worn Strings",
+    artist: "Warm Cedar",
+    genre: "Acoustic",
+    mood: "Calm",
+    cover: "https://picsum.photos/seed/chill-vibes-worn-strings/500/500",
+    color: ["#8360c3", "#2ebf91"],
+  },
+  {
+    id: "soft-kitchen-light",
+    name: "Soft Kitchen Light",
+    artist: "Kitchen Radio",
+    genre: "Acoustic",
+    mood: "Cozy",
+    cover: "https://picsum.photos/seed/chill-vibes-soft-kitchen-light/500/500",
+    color: ["#3a1c71", "#ffaf7b"],
+  },
+  {
+    id: "library-glow",
+    name: "Library Glow",
+    artist: "Margin Notes",
+    genre: "Study",
+    mood: "Focus",
+    cover: "https://picsum.photos/seed/chill-vibes-library-glow/500/500",
+    color: ["#0f2027", "#2c5364"],
+  },
+  {
+    id: "task-flow",
+    name: "Task Flow",
+    artist: "Clean Desk",
+    genre: "Study",
+    mood: "Bright",
+    cover: "https://picsum.photos/seed/chill-vibes-task-flow/500/500",
+    color: ["#11998e", "#38ef7d"],
+  },
+  {
+    id: "page-turns",
+    name: "Page Turns",
+    artist: "Quiet Pencil",
+    genre: "Study",
+    mood: "Calm",
+    cover: "https://picsum.photos/seed/chill-vibes-page-turns/500/500",
+    color: ["#654ea3", "#eaafc8"],
+  },
+  {
+    id: "rooftop-walk",
+    name: "Rooftop Walk",
+    artist: "Highline Haze",
+    genre: "Urban",
+    mood: "Late Night",
+    cover: "https://picsum.photos/seed/chill-vibes-rooftop-walk/500/500",
+    color: ["#141e30", "#243b55"],
+  },
+  {
+    id: "night-bus",
+    name: "Night Bus",
+    artist: "Night Transfer",
+    genre: "Urban",
+    mood: "Electric",
+    cover: "https://picsum.photos/seed/chill-vibes-night-bus/500/500",
+    color: ["#200122", "#6f0000"],
+  },
+  {
+    id: "corner-store",
+    name: "Corner Store",
+    artist: "Market Lights",
+    genre: "Urban",
+    mood: "Groove",
+    cover: "https://picsum.photos/seed/chill-vibes-corner-store/500/500",
+    color: ["#000046", "#1cb5e0"],
+  },
+  {
+    id: "first-snow-walk",
+    name: "First Snow Walk",
+    artist: "Frost Porch",
+    genre: "Seasonal",
+    mood: "Cozy",
+    cover: "https://picsum.photos/seed/chill-vibes-first-snow-walk/500/500",
+    color: ["#74ebd5", "#acb6e5"],
+  },
+  {
+    id: "july-evening",
+    name: "July Evening",
+    artist: "Long Weekend",
+    genre: "Seasonal",
+    mood: "Warm",
+    cover: "https://picsum.photos/seed/chill-vibes-july-evening/500/500",
+    color: ["#ff7e5f", "#feb47b"],
+  },
+  {
+    id: "maple-street",
+    name: "Maple Street",
+    artist: "Amber Lane",
+    genre: "Seasonal",
+    mood: "Nostalgic",
+    cover: "https://picsum.photos/seed/chill-vibes-maple-street/500/500",
+    color: ["#7b2ff7", "#f107a3"],
+  },
+  {
+    id: "slow-orbit",
+    name: "Slow Orbit",
+    artist: "Distant Signal",
+    genre: "Ambient",
+    mood: "Dreamy",
+    cover: "https://picsum.photos/seed/chill-vibes-slow-orbit/500/500",
+    color: ["#000428", "#004e92"],
+  },
+  {
+    id: "still-water",
+    name: "Still Water",
+    artist: "Glass Shore",
+    genre: "Ambient",
+    mood: "Calm",
+    cover: "https://picsum.photos/seed/chill-vibes-still-water/500/500",
+    color: ["#43cea2", "#185a9d"],
+  },
+  {
+    id: "cloud-room",
+    name: "Cloud Room",
+    artist: "Open Ceiling",
+    genre: "Ambient",
+    mood: "Rainy",
+    cover: "https://picsum.photos/seed/chill-vibes-cloud-room/500/500",
+    color: ["#485563", "#29323c"],
+  },
+  {
+    id: "velvet-blue",
+    name: "Velvet Blue",
+    artist: "Blue Velvet Trio",
+    genre: "Jazz",
+    mood: "Smooth",
+    cover: "https://picsum.photos/seed/chill-vibes-velvet-blue/500/500",
+    color: ["#1b365d", "#6daedb"],
+  },
+  {
+    id: "after-rain",
+    name: "After Rain",
+    artist: "Rain Club",
+    genre: "Jazz",
+    mood: "Night",
+    cover: "https://picsum.photos/seed/chill-vibes-after-rain/500/500",
+    color: ["#283048", "#859398"],
+  },
+  {
+    id: "brass-lantern",
+    name: "Brass Lantern",
+    artist: "Late Brass",
+    genre: "Jazz",
+    mood: "Late Night",
+    cover: "https://picsum.photos/seed/chill-vibes-brass-lantern/500/500",
+    color: ["#53354a", "#e84545"],
+  },
+  {
+    id: "meadow-hum",
+    name: "Meadow Hum",
+    artist: "Field Tape",
+    genre: "Nature",
+    mood: "Grounded",
+    cover: "https://picsum.photos/seed/chill-vibes-meadow-hum/500/500",
+    color: ["#56ab2f", "#a8e063"],
+  },
+  {
+    id: "creekside",
+    name: "Creekside",
+    artist: "River Bend",
+    genre: "Nature",
+    mood: "Calm",
+    cover: "https://picsum.photos/seed/chill-vibes-creekside/500/500",
+    color: ["#134e5e", "#71b280"],
+  },
+  {
+    id: "pine-trail",
+    name: "Pine Trail",
+    artist: "Pine Signal",
+    genre: "Nature",
+    mood: "Rainy",
+    cover: "https://picsum.photos/seed/chill-vibes-pine-trail/500/500",
+    color: ["#0b486b", "#f56217"],
   },
 ];
+
+export const songCatalog = songCatalogBase.map((song) => ({
+  ...song,
+  ...audioBySongId[song.id],
+  source: pixabaySource,
+}));
 
 export const defaultLibraryIds = [
   "peaceful-mind",

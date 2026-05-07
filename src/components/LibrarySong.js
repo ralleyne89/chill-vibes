@@ -6,6 +6,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
+import { getFallbackCover } from "../utils/covers";
 
 const LibrarySong = ({
   song,
@@ -16,8 +17,7 @@ const LibrarySong = ({
 }) => {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const fallbackImage =
-    "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=500&auto=format&fit=crop";
+  const fallbackImage = getFallbackCover(song.id);
 
   // Reset image error state when song changes
   useEffect(() => {
@@ -57,6 +57,9 @@ const LibrarySong = ({
   };
 
   const handleImageError = () => {
+    if (imageError) {
+      return;
+    }
     setImageError(true);
     setIsLoading(false);
   };
