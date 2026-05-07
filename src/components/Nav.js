@@ -81,6 +81,46 @@ const Nav = ({ libraryStatus, onLibraryToggle, onBrowserOpen }) => {
         <img src={Logo} alt="Chill Vibes Logo" />
         <span className="app-name">Chill Vibes</span>
       </div>
+      <div className="nav-actions" aria-label="Primary actions">
+        <button
+          type="button"
+          className="nav-action"
+          onClick={handleBrowse}
+          aria-label="Browse songs"
+        >
+          <FontAwesomeIcon icon={faSearch} aria-hidden="true" />
+          <span>Browse</span>
+        </button>
+        <button
+          type="button"
+          className={`nav-action ${libraryStatus ? "active" : ""}`}
+          onClick={handleLibraryToggle}
+          aria-expanded={libraryStatus}
+          aria-controls="library-panel"
+          aria-label={libraryStatus ? "Close library" : "Open library"}
+        >
+          <FontAwesomeIcon icon={faMusic} aria-hidden="true" />
+          <span>Library</span>
+        </button>
+        <button
+          type="button"
+          className="nav-action desktop-only"
+          onClick={handleThemeToggle}
+          aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          <FontAwesomeIcon icon={darkMode ? faSun : faMoon} aria-hidden="true" />
+          <span>{darkMode ? "Light mode" : "Dark mode"}</span>
+        </button>
+        <button
+          type="button"
+          className="nav-action desktop-only danger"
+          onClick={handleLogout}
+          title={currentUser?.email || "Signed in"}
+        >
+          <FontAwesomeIcon icon={faSignOutAlt} aria-hidden="true" />
+          <span>Logout</span>
+        </button>
+      </div>
       <div className="button-container" ref={menuRef}>
         <button
           type="button"
@@ -103,26 +143,6 @@ const Nav = ({ libraryStatus, onLibraryToggle, onBrowserOpen }) => {
             >
               <FontAwesomeIcon icon={darkMode ? faSun : faMoon} aria-hidden="true" />
               <span>{darkMode ? "Light mode" : "Dark mode"}</span>
-            </button>
-            <button
-              type="button"
-              className="nav-menu-item"
-              onClick={handleBrowse}
-              aria-label="Browse songs"
-            >
-              <FontAwesomeIcon icon={faSearch} aria-hidden="true" />
-              <span>Browse</span>
-            </button>
-            <button
-              type="button"
-              className="nav-menu-item"
-              onClick={handleLibraryToggle}
-              aria-expanded={libraryStatus}
-              aria-controls="library-panel"
-              aria-label={libraryStatus ? "Close library" : "Open library"}
-            >
-              <FontAwesomeIcon icon={faMusic} aria-hidden="true" />
-              <span>{libraryStatus ? "Close library" : "Library"}</span>
             </button>
             <button
               type="button"

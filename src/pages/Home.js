@@ -227,11 +227,20 @@ const Home = () => {
       />
       <main className="player-shell">
         {currentSong ? (
-          <Song currentSong={currentSong} />
+          <Song
+            currentSong={currentSong}
+            libraryCount={songs.length}
+            catalogCount={songCatalog.length}
+            onBrowseOpen={openBrowser}
+            onLibraryOpen={openLibrary}
+          />
         ) : (
           <div className="empty-library">
             <h2>Your library is empty</h2>
-            <p>Open Browse to add tracks to your library.</p>
+            <p>Open Browse to add a few tracks, then start a new session.</p>
+            <button type="button" onClick={openBrowser}>
+              Browse tracks
+            </button>
           </div>
         )}
         {audioError && <p className="audio-error">{audioError}</p>}

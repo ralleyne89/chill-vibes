@@ -88,13 +88,13 @@ const Login = () => {
       >
         <div className="auth-visual-panel">
           <p>Chill Vibes</p>
-          <h1>Save your favorite chill sessions.</h1>
+          <h1>Save the tracks you come back to.</h1>
           <Button
             type="button"
             variant="outline-light"
             onClick={() => history.push("/signup")}
           >
-            Sign Up
+            Create account
           </Button>
           <img
             className="auth-mascot"
@@ -108,7 +108,7 @@ const Login = () => {
       <section className="auth-form-section" aria-labelledby="login-heading">
         <div className="auth-card">
           <p className="auth-kicker">Welcome Back</p>
-          <h2 id="login-heading">Login</h2>
+          <h2 id="login-heading">Log in</h2>
           {!isFirebaseConfigured && (
             <Alert variant="warning">
               Firebase is not configured. Add the required values to
@@ -131,7 +131,7 @@ const Login = () => {
               type="submit"
               disabled={loading || authLoading || !isFirebaseConfigured}
             >
-              Login
+              Log in
             </Button>
           </Form>
           <div className="auth-divider" aria-hidden="true">
@@ -149,7 +149,7 @@ const Login = () => {
             <span>Sign in with Google</span>
           </Button>
           <p className="auth-link">
-            Need an account? <Link to="/signup">Sign Up</Link>
+            Need an account? <Link to="/signup">Create one</Link>
           </p>
         </div>
       </section>

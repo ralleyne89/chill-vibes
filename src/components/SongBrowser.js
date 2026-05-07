@@ -79,7 +79,7 @@ const SongBrowser = ({ catalog, songs, setSongs, isOpen, setIsOpen }) => {
     >
       <div className="browser-header">
         <div>
-          <h2>Browse Songs</h2>
+          <h2>Browse tracks</h2>
           <p>{catalog.length} royalty-free tracks</p>
         </div>
         <button
@@ -97,7 +97,7 @@ const SongBrowser = ({ catalog, songs, setSongs, isOpen, setIsOpen }) => {
           <FontAwesomeIcon icon={faSearch} className="search-icon" />
           <input
             type="text"
-            placeholder="Search songs, artists, genres, or moods"
+            placeholder="Search by song, artist, genre, or mood"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
@@ -158,7 +158,7 @@ const SongBrowser = ({ catalog, songs, setSongs, isOpen, setIsOpen }) => {
       <div className="browser-songs">
         {isLoading ? (
           <div className="loading">
-            <p>Loading songs...</p>
+            <p>Finding tracks...</p>
           </div>
         ) : filteredSongs.length === 0 ? (
           <div className="no-results">

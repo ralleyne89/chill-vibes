@@ -73,13 +73,17 @@ const Player = ({
 
   return (
     <div className="player" aria-label="Music player">
+      <div className="player-heading">
+        <p>Session controls</p>
+        <span>{isPlaying ? "Playing" : "Ready"}</span>
+      </div>
       <div className="time-control">
         <p>{getTime(songInfo.currentTime)}</p>
         <div
           className="track"
           style={{
             background:
-              "linear-gradient(to right, var(--accent-strong), var(--accent), #6bbcff)",
+              "linear-gradient(to right, var(--accent-deep), var(--accent), #53b1ff)",
           }}
         >
           <input

@@ -33,7 +33,7 @@ const Library = ({
     >
       <div className="panel-header">
         <div>
-          <h2>Your Music Library</h2>
+          <h2>Your library</h2>
           <p>{songs.length} saved tracks</p>
         </div>
         <button
@@ -84,7 +84,7 @@ const Library = ({
         )}
       </div>
       <div className="library-footer">
-        <p>Chill Vibes Music Player</p>
+        <p>Saved to this account on this device.</p>
       </div>
     </aside>
   );

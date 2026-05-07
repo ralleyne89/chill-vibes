@@ -1,49 +1,41 @@
 body.dark-theme {
-  --bg: #0b1220;
-  --surface: #101a2a;
-  --surface-strong: #142238;
-  --text: #f2f7ff;
-  --muted: #b7c5d8;
-  --border: rgba(242, 247, 255, 0.13);
-  --shadow: 0 24px 90px rgba(0, 0, 0, 0.48);
-  --accent: #6bbcff;
-  --accent-strong: #a9d8ff;
-  --accent-soft: rgba(107, 188, 255, 0.16);
-  --accent-border: rgba(107, 188, 255, 0.38);
-  --accent-glow: rgba(107, 188, 255, 0.18);
-  --warm: #d2ebff;
-  --danger: #ff7a85;
+  --surface: #121314;
+  --surface-strong: #181818;
+  --surface-soft: #1f2024;
+  --ink: #ffffff;
+  --muted-light: rgba(255, 255, 255, 0.68);
+  --border-light: rgba(229, 229, 229, 0.18);
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+  --danger: #ff6b83;
 
   background: var(--bg);
   color: var(--text);
 
   .App {
-    background:
-      linear-gradient(180deg, rgba(11, 18, 32, 0.92), rgba(11, 18, 32, 0.96)),
-      radial-gradient(circle at 16% 18%, rgba(107, 188, 255, 0.18), transparent 32%),
-      radial-gradient(circle at 78% 10%, rgba(0, 82, 169, 0.2), transparent 26%);
-  }
-
-  nav {
-    background: rgba(16, 26, 42, 0.9);
-  }
-
-  .nav-menu {
-    background: rgba(16, 26, 42, 0.98);
-  }
-
-  .player,
-  .library,
-  .song-browser {
-    background: var(--surface-strong);
+    background: var(--stage);
   }
 
   .animate-track {
-    background: rgba(11, 18, 32, 0.72);
+    background: rgba(18, 19, 20, 0.7);
   }
 
   .audio-error {
     background: rgba(255, 122, 133, 0.12);
     color: #ffd7db;
+  }
+
+  .auth-form-section,
+  .player,
+  .library,
+  .song-browser {
+    background: var(--surface);
+  }
+
+  .auth-card,
+  .google-auth-button,
+  .search-input,
+  .filter-chip,
+  .browser-songs .no-results button {
+    background: var(--surface-strong);
   }
 }

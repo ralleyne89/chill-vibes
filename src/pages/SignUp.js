@@ -91,8 +91,8 @@ const SignUp = () => {
     <main className="auth-screen reverse">
       <section className="auth-form-section" aria-labelledby="signup-heading">
         <div className="auth-card">
-          <p className="auth-kicker">Start Listening</p>
-          <h2 id="signup-heading">Sign Up</h2>
+          <p className="auth-kicker">Start listening</p>
+          <h2 id="signup-heading">Create account</h2>
           {!isFirebaseConfigured && (
             <Alert variant="warning">
               Firebase is not configured. Add the required values to
@@ -111,7 +111,7 @@ const SignUp = () => {
               <Form.Control type="password" ref={passwordRef} required />
             </Form.Group>
             <Form.Group id="password-confirm" className="auth-field">
-              <Form.Label>Password Confirmation</Form.Label>
+              <Form.Label>Confirm password</Form.Label>
               <Form.Control type="password" ref={passwordConfirmRef} required />
             </Form.Group>
             <Button
@@ -119,7 +119,7 @@ const SignUp = () => {
               type="submit"
               disabled={loading || authLoading || !isFirebaseConfigured}
             >
-              Sign Up
+              Create account
             </Button>
           </Form>
           <div className="auth-divider" aria-hidden="true">
@@ -134,10 +134,10 @@ const SignUp = () => {
             <span className="google-mark" aria-hidden="true">
               G
             </span>
-            <span>Sign up with Google</span>
+            <span>Continue with Google</span>
           </Button>
           <p className="auth-link">
-            Already have an account? <Link to="/login">Login</Link>
+            Already have an account? <Link to="/login">Log in</Link>
           </p>
         </div>
       </section>
@@ -150,7 +150,7 @@ const SignUp = () => {
           <p>Chill Vibes</p>
           <h1>Keep every late-night mix close.</h1>
           <Button type="button" variant="outline-light" onClick={handleLogin}>
-            Login
+            Log in
           </Button>
           <img
             className="auth-mascot"
