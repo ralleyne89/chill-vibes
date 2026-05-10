@@ -138,6 +138,26 @@ const Nav = ({ libraryStatus, onLibraryToggle, onBrowserOpen }) => {
             <button
               type="button"
               className="nav-menu-item"
+              onClick={handleBrowse}
+              aria-label="Browse songs"
+            >
+              <FontAwesomeIcon icon={faSearch} aria-hidden="true" />
+              <span>Browse</span>
+            </button>
+            <button
+              type="button"
+              className="nav-menu-item"
+              onClick={handleLibraryToggle}
+              aria-expanded={libraryStatus}
+              aria-controls="library-panel"
+              aria-label={libraryStatus ? "Close library" : "Open library"}
+            >
+              <FontAwesomeIcon icon={faMusic} aria-hidden="true" />
+              <span>{libraryStatus ? "Close library" : "Library"}</span>
+            </button>
+            <button
+              type="button"
+              className="nav-menu-item"
               onClick={handleThemeToggle}
               aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             >

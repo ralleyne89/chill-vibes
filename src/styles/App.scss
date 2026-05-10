@@ -25,9 +25,15 @@
   --accent-soft: rgba(0, 112, 209, 0.1);
   --accent-border: rgba(0, 112, 209, 0.42);
   --accent-glow: rgba(0, 112, 209, 0.2);
+  --deck-glow: rgba(83, 177, 255, 0.42);
+  --motion-fast: 180ms;
+  --motion-medium: 360ms;
+  --motion-slow: 780ms;
+  --motion-cinematic: 1400ms;
   --danger: #c81b3a;
   --radius: 8px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 body {
@@ -135,6 +141,78 @@ p {
 @import './theme';
 @import './songBrowser';
 
+@keyframes deckShimmer {
+  0% {
+    transform: translateX(-60%);
+    opacity: 0;
+  }
+
+  26%,
+  70% {
+    opacity: 0.55;
+  }
+
+  100% {
+    transform: translateX(60%);
+    opacity: 0;
+  }
+}
+
+@keyframes railFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 220% 50%;
+  }
+}
+
+@keyframes equalizerLift {
+  0%,
+  100% {
+    transform: scaleY(0.28);
+  }
+
+  45% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes cinematicPan {
+  0% {
+    transform: scale(1.02) translate3d(-1.2%, 0, 0);
+  }
+
+  100% {
+    transform: scale(1.08) translate3d(1.2%, -1%, 0);
+  }
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.94);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes rowLift {
+  0% {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @media screen and (max-width: 768px) {
   .player-shell {
     min-height: calc(100vh - 68px);
@@ -149,5 +227,16 @@ p {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .player,
+  .song-container,
+  .song-art-panel,
+  .library,
+  .song-browser,
+  .library-song,
+  .browser-song,
+  button {
+    transform: none !important;
   }
 }

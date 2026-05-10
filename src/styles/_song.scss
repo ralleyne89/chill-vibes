@@ -16,6 +16,7 @@
     display: grid;
     gap: 1.1rem;
     justify-items: start;
+    animation: popIn var(--motion-slow) var(--ease-spring) both;
   }
 
   .song-kicker {
@@ -116,7 +117,11 @@
         border-color 180ms var(--ease), transform 180ms var(--ease);
 
       &:hover {
-        transform: translateY(-1px);
+        transform: translateY(-3px);
+      }
+
+      &:active {
+        transform: translateY(0) scale(0.98);
       }
     }
 
@@ -150,6 +155,7 @@
     border-radius: var(--radius);
     background: var(--stage-soft);
     box-shadow: var(--shadow);
+    animation: popIn var(--motion-slow) var(--ease-spring) both;
 
     img {
       width: 100%;
@@ -158,6 +164,7 @@
       object-fit: cover;
       display: block;
       transform: scale(1.01);
+      animation: cinematicPan 18s ease-in-out infinite alternate;
 
       &.hidden {
         display: none;
@@ -188,6 +195,7 @@
       color: var(--ink);
       font-size: 0.74rem;
       font-weight: 800;
+      animation: popIn var(--motion-medium) var(--ease-spring) both;
     }
   }
 }

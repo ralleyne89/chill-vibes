@@ -119,6 +119,7 @@ nav {
     border-radius: calc(var(--radius) + 4px);
     background: rgba(18, 19, 20, 0.98);
     box-shadow: var(--shadow);
+    animation: popIn var(--motion-medium) var(--ease-spring) both;
   }
 
   .nav-menu-item {
@@ -177,6 +178,10 @@ nav {
       display: flex;
     }
 
+    .nav-actions {
+      display: none;
+    }
+
     .desktop-only {
       display: none;
     }
@@ -189,24 +194,6 @@ nav {
 
     .logo-container .app-name {
       display: none;
-    }
-
-    .nav-actions {
-      gap: 0.35rem;
-
-      .nav-action {
-        width: 2.65rem;
-        padding: 0;
-
-        span {
-          position: absolute;
-          width: 1px;
-          height: 1px;
-          overflow: hidden;
-          clip: rect(0 0 0 0);
-          white-space: nowrap;
-        }
-      }
     }
 
     .button-container {

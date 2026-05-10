@@ -1,12 +1,13 @@
 # Motion and interaction blueprint
 
-- Signature principle: channel switching. Panels, controls, and track rows move like selected media surfaces, with short and purposeful transitions.
-- Hero interaction: album art scales very slightly on load and hover-capable devices, but essential content remains static and readable.
+- Signature principle: cinematic signal deck. Motion should feel like a media console waking up, switching tracks, and settling back into listening mode.
+- Player deck: the control surface is dark, layered, and luminous. The progress rail glows while playing, the play core pulses, and equalizer bars move as the visible "live" signal.
+- Track change: hero copy, album art, and the player deck receive a WAAPI entrance sweep. No route or playback logic changes.
+- Play state: `is-playing` activates rail flow, button pulse, equalizer movement, and a brighter status chip. Ready state keeps only a slow ambient shimmer.
+- Speed menu: the speed popover scales and fades in with a spring-like motion.
+- Platform motion: album art has a slow cinematic pan, Browse/Library panels slide with stronger channel-switch motion, and rows/buttons get press feedback.
 - Scroll behavior: normal browser scroll only. No scroll-jacking.
-- Hover behavior: translate 1 to 3px or change surface color for feedback. No large fade-up patterns.
-- Navigation transition: menu opens as a compact dark surface; Library and Browse open as left/right channel panels.
-- Loading sequence: preserve existing image-loading placeholders, restyled as flat media placeholders.
-- Mobile alternative: panels become full-screen sheets, hover effects are removed, tap targets remain large.
-- Keyboard behavior: focus outlines remain visible, Enter/Space selection behavior in library rows is preserved.
-- Reduced-motion behavior: disable transforms and transitions where `prefers-reduced-motion: reduce` is set.
-- Performance fallback: CSS-only motion, no WebGL, no animation library, no continuous render loop.
+- Mobile alternative: motion stays visible but smaller; panel sheets remain full width and controls keep fixed dimensions.
+- Keyboard behavior: focus outlines remain visible and independent from decorative motion.
+- Reduced-motion behavior: the `usePrefersReducedMotion` hook prevents WAAPI animations, and CSS disables pulsing, shimmer, equalizer, panel, and hover transforms under `prefers-reduced-motion: reduce`.
+- Performance fallback: CSS and WAAPI only. No GSAP, WebGL, scroll-linked animation, or audio-reactive API.
